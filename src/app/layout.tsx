@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import NextTopLoader from "nextjs-toploader";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -22,8 +23,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={dmSans.className}>
-        {children}
         <Toaster richColors />
+        <NextTopLoader
+          color="#f59e0b"
+          height={3}
+          shadow="0 0 10px #f59e0b,0 0 5px #f59e0b"
+        />
+        {children}
       </body>
     </html>
   );

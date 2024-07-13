@@ -37,7 +37,6 @@ export const SignInForm = () => {
           label="E-mail"
           name="email"
           placeholder="nome@email.com"
-          isLogin
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -46,7 +45,6 @@ export const SignInForm = () => {
           name="password"
           type="password"
           placeholder="senha"
-          isLogin
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />

@@ -1,8 +1,13 @@
+import { BgWhite } from "@/components/custom/BgWhite";
+import { MyaccountForm } from "@/components/custom/myaccount/MyaccountForm";
+
 export default function MyAccountPage() {
   return (
     <main>
-      <h1>Minha Conta</h1>
-      <p>Dados da conta</p>
+      <BgWhite>
+        <h2>Dados Cadastrais</h2>
+        <MyaccountForm />
+      </BgWhite>
     </main>
   );
 }

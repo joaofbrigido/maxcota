@@ -55,7 +55,6 @@ export const CreateForm = () => {
               name="email"
               type="email"
               placeholder="nome@email.com"
-              isLogin
               value={email}
               onChange={({ target }) => setEmail(target.value)}
               required
@@ -65,7 +64,6 @@ export const CreateForm = () => {
               name="password"
               type="password"
               placeholder="senha"
-              isLogin
               value={password}
               onChange={({ target }) => setPassword(target.value)}
               required
@@ -75,7 +73,6 @@ export const CreateForm = () => {
               name="confirmPassword"
               type="password"
               placeholder="confirmar senha"
-              isLogin
               value={confirmPassword}
               onChange={({ target }) => setConfirmPassword(target.value)}
               required
