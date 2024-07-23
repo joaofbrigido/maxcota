@@ -9,16 +9,19 @@ import {
 } from "../ui/dialog";
 import { CustomButton } from "./CustomButton";
 import { Plus } from "lucide-react";
-import { CustomInput } from "./CustomInput";
-import { CustomSwitch } from "./CustomSwitch";
-import { CustomSelect } from "./CustomSelect";
 import { TickerForm } from "./TickerForm";
 
-export const DialogTicker = ({ className }: { className?: string }) => {
+export const DialogTicker = ({
+  className,
+  isAsChild = true,
+}: {
+  className?: string;
+  isAsChild?: boolean;
+}) => {
   return (
     <div className={className}>
       <Dialog>
-        <DialogTrigger asChild>
+        <DialogTrigger asChild={isAsChild}>
           <CustomButton className="max-[512px]:w-full">
             <Plus size={20} className="mr-1" />
             Adicionar Ativo

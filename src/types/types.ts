@@ -21,3 +21,9 @@ export type Ranking = {
   safetyMargin: number;
   pegratio?: number;
 };
+
+export type TickerWallet = {
+  ticker: string;
+  totalReais: number;
+  totalPercentage: number;
+};

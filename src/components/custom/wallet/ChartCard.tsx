@@ -21,53 +21,62 @@ import {
 type ChartCardProps = {
   title: string;
   whichChart: "ativo" | "setor" | "acaoFiis";
+  ativosData?: { ticker: string; total: number }[] | [];
+  percentageAcao?: number;
+  percentageFiis?: number;
 };
 
-export const ChartCard = ({ title, whichChart }: ChartCardProps) => {
-  const chartData = [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 70, fill: "var(--color-other)" },
-  ];
+export const ChartCard = ({
+  title,
+  whichChart,
+  ativosData,
+  percentageAcao,
+  percentageFiis,
+}: ChartCardProps) => {
+  // const ativosData = [
+  //   { ticker: "bbas3", total: 275, fill: "#fde047" },
+  //   { ticker: "bbes3", total: 200, fill: "#facc15" },
+  //   { ticker: "trpl4", total: 187, fill: "#eab308" },
+  //   { ticker: "sapr4", total: 173, fill: "#ca8a04" },
+  //   { ticker: "itsa4", total: 70, fill: "#b45309" },
+  // ];
 
-  const chartConfig = {
-    visitors: {
-      label: "Visitors",
-    },
-    chrome: {
-      label: "Chrome",
-      color: "hsl(var(--chart-1))",
-    },
-    safari: {
-      label: "Safari",
-      color: "hsl(var(--chart-2))",
-    },
-    firefox: {
-      label: "Firefox",
-      color: "hsl(var(--chart-3))",
-    },
-    edge: {
-      label: "Edge",
-      color: "hsl(var(--chart-4))",
-    },
-    other: {
-      label: "Other",
-      color: "hsl(var(--chart-5))",
-    },
-  } satisfies ChartConfig;
+  // const ativosCongif = {
+  //   total: {
+  //     label: "% Total",
+  //   },
+  //   bbas3: {
+  //     label: "BBAS3",
+  //     color: "hsl(var(--chart-1))",
+  //   },
+  //   bbes3: {
+  //     label: "BBES3",
+  //     color: "hsl(var(--chart-2))",
+  //   },
+  //   trpl4: {
+  //     label: "TRPL4",
+  //     color: "hsl(var(--chart-3))",
+  //   },
+  //   sapr4: {
+  //     label: "SAPR4",
+  //     color: "hsl(var(--chart-4))",
+  //   },
+  //   itsa4: {
+  //     label: "ITSA4",
+  //     color: "hsl(var(--chart-5))",
+  //   },
+  // } satisfies ChartConfig;
 
-  const barChartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
+  const setorData = [
+    { setor: "Setor 1", percentage: 25 },
+    { setor: "Setor 2", percentage: 35 },
+    { setor: "Setor 3", percentage: 20 },
+    { setor: "Setor 4", percentage: 10 },
+    { setor: "Setor 5", percentage: 10 },
   ];
-  const barChartConfig = {
-    desktop: {
-      label: "Desktop",
+  const setorConfig = {
+    percentage: {
+      label: "%",
       color: "#fbbf24",
     },
     label: {
@@ -75,27 +84,100 @@ export const ChartCard = ({ title, whichChart }: ChartCardProps) => {
     },
   } satisfies ChartConfig;
 
+  const acaoFiisData = [
+    { investimento: "acao", percentage: percentageAcao, fill: "#fcd34d" },
+    { investimento: "fiis", percentage: percentageFiis, fill: "#fbbf24" },
+  ];
+
+  const acaoFiisCongif = {
+    percentage: {
+      label: "%",
+    },
+    acao: {
+      label: "Ação",
+      color: "#000000",
+    },
+    fiis: {
+      label: "Fiis",
+      color: "#000000",
+    },
+  } satisfies ChartConfig;
+
+  function getAtivosData() {
+    const total = ativosData!.reduce((acc, item) => acc + item.total, 0);
+    const data = ativosData!.map((item) => {
+      const percentage = (item.total / total) * 100;
+      const fill = getRandomColor();
+
+      return {
+        ticker: item.ticker,
+        total: percentage,
+        fill: fill,
+      };
+    });
+
+    return data;
+  }
+
+  function getAtivosConfig() {
+    const ativosConfig = ativosData!.reduce(
+      (acc, item) => {
+        acc[item.ticker] = {
+          label: item.ticker.toUpperCase(),
+          color: `#000000`,
+        };
+        return acc;
+      },
+      { total: { label: "% Total" } } as {
+        [key: string]: {
+          label: string;
+          color?: string;
+        };
+      }
+    );
+
+    return ativosConfig satisfies ChartConfig;
+  }
+
+  function getRandomColor(): string {
+    const colors: string[] = [
+      "#FDBA74",
+      "#FB923C",
+      "#F97316",
+      "#FCD34D",
+      "#FBBF24",
+      "#F59E0B",
+      "#FDE047",
+      "#FACC15",
+      "#EAB308",
+      "#EA580C",
+      "#D97706",
+      "#CA8A04",
+    ];
+
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+  }
+
   return (
     <BgWhite>
       <h2>{title}</h2>
       {whichChart === "ativo" && (
         <ChartContainer
-          config={chartConfig}
+          config={getAtivosConfig()}
           className="mx-auto aspect-square max-h-[283px]"
         >
           <PieChart>
             <ChartTooltip
-              content={<ChartTooltipContent nameKey="visitors" hideLabel />}
+              content={<ChartTooltipContent nameKey="total" hideLabel />}
             />
-            <Pie data={chartData} dataKey="visitors" innerRadius={50}>
+            <Pie data={getAtivosData()} dataKey="total" innerRadius={50}>
               <LabelList
-                dataKey="browser"
+                dataKey="ticker"
                 className="fill-background"
                 stroke="none"
                 fontSize={12}
-                formatter={(value: keyof typeof chartConfig) =>
-                  chartConfig[value]?.label
-                }
+                formatter={(value: string) => getAtivosConfig()[value]?.label}
               />
             </Pie>
           </PieChart>
@@ -104,12 +186,12 @@ export const ChartCard = ({ title, whichChart }: ChartCardProps) => {
 
       {whichChart === "setor" && (
         <ChartContainer
-          config={barChartConfig}
+          config={setorConfig}
           className="mt-5 max-h-[190px] w-full"
         >
           <BarChart
             accessibilityLayer
-            data={barChartData}
+            data={setorData}
             layout="vertical"
             margin={{
               right: 16,
@@ -117,7 +199,7 @@ export const ChartCard = ({ title, whichChart }: ChartCardProps) => {
           >
             <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="month"
+              dataKey="setor"
               type="category"
               tickLine={false}
               tickMargin={10}
@@ -125,26 +207,26 @@ export const ChartCard = ({ title, whichChart }: ChartCardProps) => {
               tickFormatter={(value) => value.slice(0, 3)}
               hide
             />
-            <XAxis dataKey="desktop" type="number" hide />
+            <XAxis dataKey="percentage" type="number" hide />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Bar
-              dataKey="desktop"
+              dataKey="percentage"
               layout="vertical"
-              fill="var(--color-desktop)"
+              fill="var(--color-percentage)"
               radius={4}
             >
               <LabelList
-                dataKey="month"
+                dataKey="setor"
                 position="insideLeft"
                 offset={8}
                 className="fill-[--color-label]"
                 fontSize={12}
               />
               <LabelList
-                dataKey="desktop"
+                dataKey="percentage"
                 position="right"
                 offset={8}
                 className="fill-foreground"
@@ -157,21 +239,21 @@ export const ChartCard = ({ title, whichChart }: ChartCardProps) => {
 
       {whichChart === "acaoFiis" && (
         <ChartContainer
-          config={chartConfig}
+          config={acaoFiisCongif}
           className="mx-auto aspect-square max-h-[210px]"
         >
           <PieChart>
             <ChartTooltip
-              content={<ChartTooltipContent nameKey="visitors" hideLabel />}
+              content={<ChartTooltipContent nameKey="percentage" hideLabel />}
             />
-            <Pie data={chartData} dataKey="visitors" innerRadius={40}>
+            <Pie data={acaoFiisData} dataKey="percentage" innerRadius={40}>
               <LabelList
-                dataKey="browser"
+                dataKey="investimento"
                 className="fill-background"
                 stroke="none"
                 fontSize={12}
-                formatter={(value: keyof typeof chartConfig) =>
-                  chartConfig[value]?.label
+                formatter={(value: keyof typeof acaoFiisCongif) =>
+                  acaoFiisCongif[value]?.label
                 }
               />
             </Pie>
