@@ -13,18 +13,18 @@ import { TickerForm } from "./TickerForm";
 
 export const DialogTicker = ({
   className,
-  isAsChild = true,
+  onlyIcon = false,
 }: {
   className?: string;
-  isAsChild?: boolean;
+  onlyIcon?: boolean;
 }) => {
   return (
     <div className={className}>
       <Dialog>
-        <DialogTrigger asChild={isAsChild}>
+        <DialogTrigger asChild>
           <CustomButton className="max-[512px]:w-full">
             <Plus size={20} className="mr-1" />
-            Adicionar Ativo
+            {!onlyIcon && "Adicionar Ativo"}
           </CustomButton>
         </DialogTrigger>
         <DialogContent className="min-w-[780px] max-lg:min-w-[90%] max-lg:max-w-[90%]">

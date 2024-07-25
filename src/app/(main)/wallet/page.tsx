@@ -1,10 +1,17 @@
 import { BgWhite } from "@/components/custom/BgWhite";
+import { DialogTicker } from "@/components/custom/DialogTicker";
 import { ChartCard } from "@/components/custom/wallet/ChartCard";
 import { NumberCard } from "@/components/custom/wallet/NumberCard";
 import { columns } from "@/components/custom/wallet/tableWallet/columns";
 import { TableWallet } from "@/components/custom/wallet/tableWallet/data";
 import { TickerWallet } from "@/types/types";
-import { DollarSign, ShieldPlus, WalletMinimal } from "lucide-react";
+import {
+  Divide,
+  DollarSign,
+  FileMinus2,
+  ShieldPlus,
+  WalletMinimal,
+} from "lucide-react";
 
 export default function WalletPage() {
   const walletTickers: TickerWallet[] = [
@@ -46,52 +53,69 @@ export default function WalletPage() {
   ];
 
   return (
-    <main className="grid grid-cols-[0.45fr_1fr] gap-5 max-[1200px]:grid-cols-1">
-      <div className="space-y-5">
-        <NumberCard
-          title="Total em Reais"
-          value="R$ 67.945,32"
-          icon={<DollarSign size={20} className="text-amber-400" />}
-        />
-        <ChartCard
-          title="Divisão por Ativo"
-          whichChart="ativo"
-          ativosData={[
-            { ticker: "bbas3", total: 275 },
-            { ticker: "bbes3", total: 200 },
-            { ticker: "trpl4", total: 187 },
-            { ticker: "sapr4", total: 173 },
-            { ticker: "itsa4", total: 70 },
-            { ticker: "mxrf11", total: 123 },
-            { ticker: "xpml11", total: 321 },
-          ]}
-        />
-      </div>
-      <BgWhite>
-        <TableWallet columns={columns} data={walletTickers} />
-      </BgWhite>
+    <>
+      {walletTickers.length <= 0 ? (
+        <BgWhite fullHeight>
+          <div className="flex flex-col items-center justify-center gap-5 h-full">
+            <FileMinus2 size={64} className="text-stone-500" />
+            <p className="max-w-[570px] text-center text-stone-500 text-xl">
+              Nenhum ativo cadastrado incluido na carteira, adicione pelo menos
+              um ativo para controlar a carteira
+            </p>
+            <DialogTicker />
+          </div>
+        </BgWhite>
+      ) : (
+        <main className="grid grid-cols-[0.45fr_1fr] gap-5 max-[1200px]:grid-cols-1">
+          <div className="space-y-5">
+            <NumberCard
+              title="Total em Reais"
+              value="R$ 67.945,32"
+              icon={<DollarSign size={20} className="text-amber-400" />}
+            />
+            <ChartCard
+              title="Divisão por Ativo"
+              whichChart="ativo"
+              ativosData={[
+                { ticker: "bbas3", total: 275 },
+                { ticker: "bbes3", total: 200 },
+                { ticker: "trpl4", total: 187 },
+                { ticker: "sapr4", total: 173 },
+                { ticker: "itsa4", total: 70 },
+                { ticker: "mxrf11", total: 123 },
+                { ticker: "xpml11", total: 321 },
+              ]}
+            />
+          </div>
+          <BgWhite>
+            <TableWallet columns={columns} data={walletTickers} />
+          </BgWhite>
 
-      <div className="space-y-5">
-        <NumberCard
-          title="Total de Ativos"
-          value="10"
-          icon={<WalletMinimal size={20} className="text-amber-400" />}
-        />
-        <NumberCard
-          title="Ativos com Margin Seg"
-          value="7"
-          icon={<ShieldPlus size={20} className="text-amber-400" />}
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
-        <ChartCard title="Divisão por Setor" whichChart="setor" />
-        <ChartCard
-          title="Ação x FIIs"
-          whichChart="acaoFiis"
-          percentageAcao={63}
-          percentageFiis={37}
-        />
-      </div>
-    </main>
+          <div className="space-y-5">
+            <NumberCard
+              title="Total de Ativos"
+              value="10"
+              icon={<WalletMinimal size={20} className="text-amber-400" />}
+            />
+            <NumberCard
+              title="Ativos com Margin Seg"
+              value="7"
+              icon={<ShieldPlus size={20} className="text-amber-400" />}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
+            <ChartCard title="Divisão por Setor" whichChart="setor" />
+            <ChartCard
+              title="Ação x FIIs"
+              whichChart="acaoFiis"
+              percentageAcao={63}
+              percentageFiis={37}
+            />
+          </div>
+
+          <DialogTicker onlyIcon className="fixed right-4 bottom-4" />
+        </main>
+      )}
+    </>
   );
 }

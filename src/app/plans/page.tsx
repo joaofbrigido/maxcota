@@ -49,32 +49,19 @@ export default async function PlansPage() {
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-5 max-sm:grid-cols-1">
-          <PlansCard
-            name="Free"
-            price="0,00"
-            description="Calcule preço teto de alguns ativos, recomendado para testes"
-            plan="Free"
-          >
-            <PlansCardItem title="Preço teto de até 4 ativos" />
-            <PlansCardItem title="Ranking método Bazin de até 15 ativos" />
-            <PlansCardItem title="Ranking método Graham de até 15 ativos" />
-            <PlansCardItem title="Ranking método Lynch de até 15 ativos" />
+          <PlansCard name="Pro Mensal" price="9,00" plan="monthly">
+            <PlansCardItem title="Ranking método Bazin de todos os ativos" />
+            <PlansCardItem title="Ranking método Graham de todos os ativos" />
+            <PlansCardItem title="Ranking método Lynch de todos os ativos" />
             <PlansCardItem
               title="Acompanhamento de Carteira"
               description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo, entre outras"
-              notSupport
             />
-            <PlansCardItem title="Exportação de tabelas em excel" notSupport />
-            <PlansCardItem title="Suporte via email" notSupport />
+            <PlansCardItem title="Exportação de tabelas em excel" />
+            <PlansCardItem title="Suporte via email" />
           </PlansCard>
 
-          <PlansCard
-            name="Pro"
-            price="49,00"
-            description="Recomendado pra quem quer ter um acompanhamento sólido de seus ativos"
-            popular
-            plan="Pro"
-          >
+          <PlansCard name="Pro Vitalício" price="69,00" popular plan="vitality">
             <PlansCardItem title="Ranking método Bazin de todos os ativos" />
             <PlansCardItem title="Ranking método Graham de todos os ativos" />
             <PlansCardItem title="Ranking método Lynch de todos os ativos" />

@@ -85,7 +85,6 @@ export function TableWallet<TData, TValue>({
           className="max-w-sm  max-[530px]:max-w-full"
         />
         <div className="flex gap-3 max-[530px]:w-full">
-          <DialogTicker isAsChild={false} />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

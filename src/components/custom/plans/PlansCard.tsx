@@ -7,16 +7,14 @@ import { toast } from "sonner";
 type PlansCardProps = {
   name: string;
   price: string;
-  description: string;
   popular?: boolean;
   children?: React.ReactNode;
-  plan: "Free" | "Standard" | "Pro";
+  plan: "monthly" | "vitality";
 };
 
 export const PlansCard = ({
   name,
   price,
-  description,
   popular,
   children,
   plan,
@@ -51,16 +49,18 @@ export const PlansCard = ({
             </span>
           )}
         </div>
-        <div className="flex items-end gap-1 mb-2">
+        <div className="flex items-end gap-1">
           {popular && (
             <span className="text-stone-400 line-through font-medium mr-1 block">
-              R$59,00
+              R$89,00
             </span>
           )}
-          <h3 className="text-3xl font-bold">R${price}</h3>
+          <h3 className="text-3xl font-bold">
+            R${price}
+            {!popular && <span className=" text-base">/mês</span>}
+          </h3>
         </div>
-        <p className="text-stone-950/60 mb-5">{description}</p>
-        <ul className="flex flex-col gap-3">{children}</ul>
+        <ul className="flex flex-col gap-3 mt-5">{children}</ul>
       </div>
       <CustomButton
         variant={popular ? "default" : "outline"}
@@ -71,8 +71,8 @@ export const PlansCard = ({
       >
         Selecionar
       </CustomButton>
-      <span className="text-stone-950/70 text-sm text-center -mt-4">
-        Pague uma vez. Use para sempre!
+      <span className="text-stone-950/70 text-sm text-center -mt-3">
+        {popular ? "Pague uma vez. Use para sempre!" : "Cobrado mensalmente"}
       </span>
     </div>
   );
