@@ -75,7 +75,7 @@ export const MenuLinks = ({ setOpenMenu }: MenuLinksProps) => {
         className="flex gap-3 items-center justify-center rounded-md w-full absolute bottom-0 right-0 text-stone-700 hover:bg-black/10 hover:text-stone-950 transition py-2"
       >
         <CircleArrowUp size={20} className="text-stone-700" />
-        Upgrade para o Pro
+        Alterar para Vitalício
       </Link>
     </nav>
   );

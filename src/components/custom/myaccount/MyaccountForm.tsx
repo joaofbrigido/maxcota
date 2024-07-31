@@ -34,7 +34,7 @@ export const MyaccountForm = () => {
           href="/plans"
           className="primary-color-x text-amber-50 hover:brightness-105 transition hover:shadow-lg hover:shadow-amber-500/30 px-4 py-2 rounded-md font-bold text-sm leading-6"
         >
-          Upgrade Plano
+          Alterar para Vitalício
         </Link>
         <CustomButton variant="success">Salvar</CustomButton>
       </div>

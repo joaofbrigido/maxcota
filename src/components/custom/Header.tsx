@@ -106,7 +106,7 @@ export const Header = () => {
                   className="flex items-center gap-2 hover:text-amber-500 transition"
                 >
                   <TrendingUp size={16} />
-                  Upgrade Para Pro
+                  Alterar para Vitalício
                 </Link>
               </li>
               <li>
