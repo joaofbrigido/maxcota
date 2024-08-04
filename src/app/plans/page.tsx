@@ -1,29 +1,35 @@
 import { PlansCard } from "@/components/custom/plans/PlansCard";
 import { PlansCardItem } from "@/components/custom/plans/PlansCardItem";
+import { Profile } from "@/types/types";
+import { createClient } from "@/utils/supabase/server";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 export default async function PlansPage() {
-  // const supabase = createClient();
-  // const { data, error } = await supabase.auth.getUser();
+  const supabase = createClient();
+  const { data: dataUser } = await supabase.auth.getUser();
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", dataUser?.user?.id)
+    .returns<Profile[]>()
+    .single();
 
-  // if (error || !data?.user) {
-  //   redirect("/login");
-  // }
+  if (error) {
+    toast.error("Erro ao consultar usuário", {
+      description: error.message,
+    });
+  }
 
-  // const { data: user } = await supabase
-  //   .from("users")
-  //   .select("*")
-  //   .eq("auth_user_id", data.user.id)
-  //   .single();
+  console.log(profile?.plan_id);
 
   return (
     <main className="bg-stone-200 pb-8">
       <div className="max-w-[1220px] mx-auto p-5 min-h-[calc(100vh-32px)] pt-12">
         <div className="flex flex-col items-center gap-8">
-          {false && (
+          {profile?.plan_id! < 3 && (
             <Link
               href="/"
               className="flex items-center gap-2 font-bold hover:text-amber-500"
@@ -41,7 +47,7 @@ export default async function PlansPage() {
           />
           <div className="text-center">
             <h1>
-              {true
+              {profile?.plan_id! !== 1
                 ? "Escolha seu plano para finalizar o cadastro!"
                 : "Alterar Plano"}
             </h1>

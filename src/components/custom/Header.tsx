@@ -2,20 +2,14 @@
 
 import { usePathname } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import {
-  BarChart4,
-  ChevronDown,
-  CircleUserRound,
-  LogOut,
-  TrendingUp,
-  WandSparkles,
-} from "lucide-react";
+import { ChevronDown, CircleUserRound, LogOut, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { MenuMobile } from "./MenuMobile";
 import { toast } from "sonner";
 import { signOut } from "@/actions/login";
+import { Profile } from "@/types/types";
 
-export const Header = () => {
+export const Header = ({ profile }: { profile: Profile }) => {
   const pathname = usePathname();
 
   function pageName() {
@@ -39,35 +33,43 @@ export const Header = () => {
   }
 
   function getFirstTwoLetters() {
-    return "João Fernando Amaral Brígido"
+    if (!profile) return "";
+
+    return profile.full_name
       .split(" ")
       .map((word) => word[0].toUpperCase())
       .slice(0, 2);
   }
 
   function getFirstTwoNames() {
-    const namesArray = "João Fernando Amaral Brígido".split(" ");
-    if (namesArray.length >= 2) {
-      namesArray[0] += " ";
+    if (profile) {
+      const namesArray = profile.full_name.split(" ");
+      if (namesArray.length >= 2) {
+        namesArray[0] += " ";
+      }
+      return namesArray.slice(0, 2);
     }
-    return namesArray.slice(0, 2);
+    return "";
   }
 
   function getPlanName() {
-    // switch (user.plan) {
-    //   case 1:
-    //     return "Free";
-    //   case 2:
-    //     return "Pro";
-    // }
-    return "Free";
+    if (profile) {
+      switch (profile.plan_id) {
+        case 1:
+          return "Mensal";
+        case 2:
+          return "Vitalício";
+      }
+    }
+
+    return "";
   }
 
   return (
     <header className="flex justify-between gap-5 items-center px-5 py-3 border-b border-b-stone-200">
       <div className="flex items-center gap-4">
         <button className="md:hidden">
-          <MenuMobile />
+          <MenuMobile profile={profile} />
         </button>
         <h1>{pageName()}</h1>
       </div>
@@ -80,14 +82,14 @@ export const Header = () => {
             <div>
               <h3 className="font-bold text-left">{getFirstTwoNames()}</h3>
               <p className="flex gap-2 items-center text-stone-950/70 text-left">
-                Plano: Free
+                Plano: {getPlanName()}
               </p>
             </div>
             <ChevronDown size={20} />
           </button>
         </PopoverTrigger>
         <PopoverContent className="text-stone-950 border-none w-full right-5 rounded-2xl">
-          <h3 className="font-medium">João Fernando Amaral Brígido</h3>
+          <h3 className="font-medium">{profile?.full_name}</h3>
           <p className="mt-1 text-stone-950/70">Plano: {getPlanName()}</p>
           <span className="bg-stone-200 h-[1px] block my-4" />
           <nav>
@@ -101,15 +103,17 @@ export const Header = () => {
                   Minha Conta
                 </Link>
               </li>
-              <li>
-                <Link
-                  href={"/plans"}
-                  className="flex items-center gap-2 hover:text-amber-500 transition"
-                >
-                  <TrendingUp size={16} />
-                  Alterar para Vitalício
-                </Link>
-              </li>
+              {profile?.plan_id === 1 && (
+                <li>
+                  <Link
+                    href={"/plans"}
+                    className="flex items-center gap-2 hover:text-amber-500 transition"
+                  >
+                    <TrendingUp size={16} />
+                    Alterar para Vitalício
+                  </Link>
+                </li>
+              )}
               <li>
                 <button
                   onClick={logout}

@@ -10,8 +10,9 @@ import {
 } from "../ui/sheet";
 import { useState } from "react";
 import { MenuLinks } from "./MenuLinks";
+import { Profile } from "@/types/types";
 
-export const MenuMobile = () => {
+export const MenuMobile = ({ profile }: { profile: Profile }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
@@ -24,7 +25,7 @@ export const MenuMobile = () => {
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
         <div>
-          <MenuLinks setOpenMenu={setOpenMenu} />
+          <MenuLinks setOpenMenu={setOpenMenu} profile={profile} />
         </div>
       </SheetContent>
     </Sheet>

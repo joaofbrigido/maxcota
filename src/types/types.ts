@@ -27,3 +27,11 @@ export type TickerWallet = {
   totalReais: number;
   totalPercentage: number;
 };
+
+export type Profile = {
+  id: string;
+  created_at: string;
+  full_name: string;
+  email: string;
+  plan_id: number;
+};

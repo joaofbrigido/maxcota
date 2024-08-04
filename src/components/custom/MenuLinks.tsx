@@ -3,12 +3,14 @@
 import { CircleArrowUp, CircleUserRound, Home, Wallet } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Profile } from "@/types/types";
 
 type MenuLinksProps = {
   setOpenMenu?: React.Dispatch<React.SetStateAction<boolean>>;
+  profile: Profile;
 };
 
-export const MenuLinks = ({ setOpenMenu }: MenuLinksProps) => {
+export const MenuLinks = ({ setOpenMenu, profile }: MenuLinksProps) => {
   const pathname = usePathname();
 
   return (
@@ -70,13 +72,15 @@ export const MenuLinks = ({ setOpenMenu }: MenuLinksProps) => {
           </Link>
         </li>
       </ul>
-      <Link
-        href="/plans"
-        className="flex gap-3 items-center justify-center rounded-md w-full absolute bottom-0 right-0 text-stone-700 hover:bg-black/10 hover:text-stone-950 transition py-2"
-      >
-        <CircleArrowUp size={20} className="text-stone-700" />
-        Alterar para Vitalício
-      </Link>
+      {profile.plan_id === 1 && (
+        <Link
+          href="/plans"
+          className="flex gap-3 items-center justify-center rounded-md w-full absolute bottom-0 right-0 text-stone-700 hover:bg-black/10 hover:text-stone-950 transition py-2"
+        >
+          <CircleArrowUp size={20} className="text-stone-700" />
+          Alterar para Vitalício
+        </Link>
+      )}
     </nav>
   );
 };

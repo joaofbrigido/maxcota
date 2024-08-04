@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { MenuLinks } from "./MenuLinks";
 import Link from "next/link";
+import { Profile } from "@/types/types";
 
-export const MenuLateral = () => {
+export const MenuLateral = ({ profile }: { profile: Profile }) => {
   return (
     <aside className="p-6 bg-stone-200 min-h-screen max-md:hidden flex flex-col">
       <div className="fixed">
@@ -19,7 +20,7 @@ export const MenuLateral = () => {
           />
         </Link>
 
-        <MenuLinks />
+        <MenuLinks profile={profile} />
       </div>
     </aside>
   );
