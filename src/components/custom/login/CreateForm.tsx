@@ -2,15 +2,14 @@
 
 import { CustomInput } from "../CustomInput";
 import { useState } from "react";
-// import { signUp } from "@/actions/login";
 import { toast } from "sonner";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
 import { CustomButton } from "../CustomButton";
 import { useForm } from "@/hooks/useForm";
+import { signUp } from "@/actions/login";
 
 export const CreateForm = () => {
-  // const [fullName, setFullName] = useState("");
   const email = useForm("email");
   const password = useForm("password");
   const confirmPassword = useForm("password");
@@ -21,18 +20,31 @@ export const CreateForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    // const response = await signUp(fullName, email, password, confirmPassword);
+    if (
+      !email.validate() ||
+      !password.validate() ||
+      !confirmPassword.validate()
+    ) {
+      toast.warning("Preencha todos os campos corretamente");
+      setLoading(false);
+      return;
+    }
 
-    // if (response?.error) {
-    //   toast.error("Erro ao criar conta", {
-    //     description: response.error,
-    //   });
-    // }
+    const response = await signUp({
+      email: email.value,
+      password: password.value,
+      confirmPassword: confirmPassword.value,
+    });
 
-    // if (response.ok) {
-    //   setsuccessCreate(true);
-    //   window.location.href = "/plans";
-    // }
+    if (response?.error) {
+      toast.error("Erro ao criar conta", {
+        description: response.error,
+      });
+    }
+
+    if (response.ok) {
+      setsuccessCreate(true);
+    }
 
     setLoading(false);
   }

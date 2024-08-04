@@ -5,27 +5,37 @@ import Link from "next/link";
 import { CustomInput } from "../CustomInput";
 import { CustomButton } from "../CustomButton";
 import { toast } from "sonner";
+import { useForm } from "@/hooks/useForm";
+import { signIn } from "@/actions/login";
 
 export const SignInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const email = useForm("email");
+  const password = useForm();
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
 
-    // const response = await signIn(email, password);
+    if (!email.validate() || !password.validate()) {
+      toast.warning("Preencha todos os campos corretamente");
+      setLoading(false);
+      return;
+    }
 
-    // if (response?.error) {
-    //   toast.error("Erro logar, tente novamente mais tarde", {
-    //     description: response.error,
-    //   });
-    // }
+    const response = await signIn(email.value, password.value);
+    console.log(response);
 
-    // if (response?.ok) {
-    //   window.location.href = "/";
-    // }
+    if (response?.error) {
+      console.log("teste");
+      toast.error("Erro logar, tente novamente mais tarde", {
+        description: response.error,
+      });
+    }
+
+    if (response?.ok) {
+      window.location.href = "/";
+    }
 
     setLoading(false);
   }
@@ -37,16 +47,14 @@ export const SignInForm = () => {
           label="E-mail"
           name="email"
           placeholder="nome@email.com"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          {...email}
         />
         <CustomInput
           label="Senha"
           name="password"
           type="password"
           placeholder="senha"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          {...password}
         />
         <Link
           href={"/login/lost"}

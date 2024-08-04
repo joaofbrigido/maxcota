@@ -23,7 +23,7 @@ export default async function PlansPage() {
     <main className="bg-stone-200 pb-8">
       <div className="max-w-[1220px] mx-auto p-5 min-h-[calc(100vh-32px)] pt-12">
         <div className="flex flex-col items-center gap-8">
-          {true && (
+          {false && (
             <Link
               href="/"
               className="flex items-center gap-2 font-bold hover:text-amber-500"
@@ -41,7 +41,7 @@ export default async function PlansPage() {
           />
           <div className="text-center">
             <h1>
-              {false
+              {true
                 ? "Escolha seu plano para finalizar o cadastro!"
                 : "Alterar Plano"}
             </h1>
@@ -55,7 +55,7 @@ export default async function PlansPage() {
             <PlansCardItem title="Ranking método Lynch de todos os ativos" />
             <PlansCardItem
               title="Acompanhamento de Carteira"
-              description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo, entre outras"
+              description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo e muito mais"
             />
             <PlansCardItem title="Exportação de tabelas em excel" />
             <PlansCardItem title="Suporte via email" />
@@ -67,7 +67,7 @@ export default async function PlansPage() {
             <PlansCardItem title="Ranking método Lynch de todos os ativos" />
             <PlansCardItem
               title="Acompanhamento de Carteira"
-              description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo, entre outras"
+              description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo e muito mais"
             />
             <PlansCardItem title="Exportação de tabelas em excel" />
             <PlansCardItem title="Suporte via email" />

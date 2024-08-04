@@ -1,5 +1,6 @@
 "use client";
 
+import { chooseFirstPlan } from "@/actions/login";
 import { CustomButton } from "../CustomButton";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -23,13 +24,20 @@ export const PlansCard = ({
 
   async function handleChangePlan() {
     setLoading(true);
-    // const response = await chooseFirstPlan(plan);
+    const response = await chooseFirstPlan(plan);
 
-    // if (response?.error) {
-    //   toast.error("Erro ao selecionar um plano, tente novamente mais tarde.", {
-    //     description: response.error,
-    //   });
-    // }
+    if (response?.error) {
+      toast.error("Erro ao selecionar um plano, tente novamente mais tarde.", {
+        description: response.error,
+      });
+    }
+
+    if (response?.ok) {
+      toast.success("Plano escolhido com sucesso!", {
+        description: "Redirecionando para Home...",
+      });
+      window.location.href = "/";
+    }
 
     setLoading(false);
   }
@@ -67,7 +75,7 @@ export const PlansCard = ({
         className="w-full"
         isLoading={loading}
         onclick={handleChangePlan}
-        disabled={false /* Desativar para plano free */}
+        disabled={false /* Desativar para plano mensal */}
       >
         Selecionar
       </CustomButton>

@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { MenuMobile } from "./MenuMobile";
 import { toast } from "sonner";
+import { signOut } from "@/actions/login";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -29,12 +30,12 @@ export const Header = () => {
   }
 
   async function logout() {
-    // const response = await signOut();
-    // if (response?.error) {
-    //   toast.error("Erro ao sair", {
-    //     description: response.error,
-    //   });
-    // }
+    const response = await signOut();
+    if (response?.error) {
+      toast.error("Erro ao sair", {
+        description: response.error,
+      });
+    }
   }
 
   function getFirstTwoLetters() {
