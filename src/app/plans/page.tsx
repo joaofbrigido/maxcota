@@ -23,8 +23,6 @@ export default async function PlansPage() {
     });
   }
 
-  console.log(profile?.plan_id);
-
   return (
     <main className="bg-stone-200 pb-8">
       <div className="max-w-[1220px] mx-auto p-5 min-h-[calc(100vh-32px)] pt-12">
