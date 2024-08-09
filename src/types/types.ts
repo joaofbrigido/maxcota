@@ -1,4 +1,13 @@
 export type Ticker = {
+  id: number;
+  ticker: string;
+  expected_dividend_yield: number;
+  dpa_year: number;
+  stocks_quantity: number;
+  user_id: string;
+};
+
+export type TickerTable = {
   id: string;
   ticker: string;
   amount: number;
@@ -10,7 +19,7 @@ export type Ticker = {
   safetyMargin: number;
 };
 
-export type Ranking = {
+export type TickerRanking = {
   id: string;
   rank: number;
   ticker: string;

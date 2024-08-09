@@ -1,10 +1,10 @@
-import { Ranking } from "@/types/types";
+import { TickerRanking } from "@/types/types";
 import { BgWhite } from "../BgWhite";
 import { columnsLynch } from "./tableRanking/columns";
 import { TableRanking } from "./tableRanking/data";
 
 export const TabLynch = () => {
-  const tickersLynch: Ranking[] = [
+  const tickersLynch: TickerRanking[] = [
     {
       id: "1",
       rank: 1,

@@ -23,8 +23,14 @@ type CustomSelectProps = {
   label: string;
   name: string;
   placeholder: string;
-  //   value?: string;
-  //   onChange?: (value: string) => void;
+  value: string;
+  setValue: (value: string) => void;
+  // options: Option[];
+};
+
+type Option = {
+  value: string;
+  label: string;
 };
 
 const frameworks = [
@@ -51,14 +57,14 @@ const frameworks = [
 ];
 
 export function CustomSelect({
-  // onChange,
-  // value,
+  setValue,
+  value,
   label,
   name,
   placeholder,
-}: CustomSelectProps) {
+}: // options,
+CustomSelectProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
 
   return (
     <div>

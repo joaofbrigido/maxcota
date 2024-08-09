@@ -1,10 +1,10 @@
-import { Ranking } from "@/types/types";
+import { TickerRanking } from "@/types/types";
 import { BgWhite } from "../BgWhite";
 import { columns } from "./tableRanking/columns";
 import { TableRanking } from "./tableRanking/data";
 
 export const TabGraham = () => {
-  const tickersGraham: Ranking[] = [
+  const tickersGraham: TickerRanking[] = [
     {
       id: "1",
       rank: 1,

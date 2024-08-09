@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ticker } from "@/types/types";
+import { TickerTable } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Ticker>[] = [
+export const columns: ColumnDef<TickerTable>[] = [
   {
     accessorKey: "ticker",
     header: ({ column }) => {

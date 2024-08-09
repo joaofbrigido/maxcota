@@ -33,12 +33,12 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { FileSpreadsheet, MoreHorizontal, Pen, Trash } from "lucide-react";
-import { Ticker } from "@/types/types";
+import { TickerTable } from "@/types/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onEdit: (data: Ticker) => void;
+  onEdit: (data: TickerTable) => void;
   onDelete: (id: string) => void;
 }
 
@@ -186,7 +186,7 @@ export function TableCeilingPrice<TData, TValue>({
                         <DropdownMenuLabel>Ações</DropdownMenuLabel>
                         <DropdownMenuItem
                           onClick={() => {
-                            onEdit(row.original as Ticker);
+                            onEdit(row.original as TickerTable);
                           }}
                         >
                           <Pen size={12} className="mr-2" />
@@ -195,7 +195,7 @@ export function TableCeilingPrice<TData, TValue>({
                         <DropdownMenuItem
                           className="text-red-500"
                           onClick={() => {
-                            const ticker = row.original as Ticker;
+                            const ticker = row.original as TickerTable;
                             onDelete(ticker.id);
                           }}
                         >

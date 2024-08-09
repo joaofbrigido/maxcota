@@ -33,7 +33,7 @@ export const CustomButton = ({
   return (
     <>
       {isLoading ? (
-        <Button className={`${className}`} disabled>
+        <Button className={`${className}`} variant={variant} disabled>
           <Loader className="animate-spin mr-3" />
           Carregando...
         </Button>

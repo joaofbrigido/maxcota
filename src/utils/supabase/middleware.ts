@@ -61,34 +61,36 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.redirect(url);
     }
 
-    // redirect Caso user não tenha selecionado um plano
-    if (
-      (profile?.plan_id === null || profile?.plan_id === 3) &&
-      !request.nextUrl.pathname.startsWith("/plans")
-    ) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/plans";
-      return NextResponse.redirect(url);
-    }
+    if (profile) {
+      // redirect Caso user não tenha selecionado um plano
+      if (
+        (profile.plan_id === null || profile.plan_id === 3) &&
+        !request.nextUrl.pathname.startsWith("/plans")
+      ) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/plans";
+        return NextResponse.redirect(url);
+      }
 
-    // redirect Caso user já tenha aceitado os termos
-    if (
-      request.nextUrl.pathname.startsWith("/accept-terms") &&
-      profile?.plan_id !== 3
-    ) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/";
-      return NextResponse.redirect(url);
-    }
+      // redirect Caso user já tenha aceitado os termos
+      if (
+        request.nextUrl.pathname.startsWith("/accept-terms") &&
+        profile.plan_id !== 3
+      ) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/";
+        return NextResponse.redirect(url);
+      }
 
-    // redirect Caso user esteja no plano vitalício
-    if (
-      request.nextUrl.pathname.startsWith("/plans") &&
-      profile?.plan_id === 2
-    ) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/";
-      return NextResponse.redirect(url);
+      // redirect Caso user esteja no plano vitalício
+      if (
+        request.nextUrl.pathname.startsWith("/plans") &&
+        profile.plan_id === 2
+      ) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/";
+        return NextResponse.redirect(url);
+      }
     }
   }
 

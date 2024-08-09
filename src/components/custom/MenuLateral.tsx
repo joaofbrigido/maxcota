@@ -17,6 +17,7 @@ export const MenuLateral = ({ profile }: { profile: Profile }) => {
             height={37}
             className="m-auto"
             sizes="150px"
+            priority
           />
         </Link>
 

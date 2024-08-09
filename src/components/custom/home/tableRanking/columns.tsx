@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ranking } from "@/types/types";
+import { TickerRanking } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Ranking>[] = [
+export const columns: ColumnDef<TickerRanking>[] = [
   {
     accessorKey: "rank",
     header: ({ column }) => {
@@ -113,7 +113,7 @@ export const columns: ColumnDef<Ranking>[] = [
   },
 ];
 
-export const columnsLynch: ColumnDef<Ranking>[] = [
+export const columnsLynch: ColumnDef<TickerRanking>[] = [
   {
     accessorKey: "rank",
     header: ({ column }) => {

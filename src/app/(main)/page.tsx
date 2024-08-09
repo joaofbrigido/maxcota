@@ -1,3 +1,4 @@
+import { getAll } from "@/actions/ticker";
 import { DialogTicker } from "@/components/custom/DialogTicker";
 import { TabBazin } from "@/components/custom/home/TabBazin";
 import { TabCeilingPrice } from "@/components/custom/home/TabCeilingPrice";
@@ -5,7 +6,10 @@ import { TabGraham } from "@/components/custom/home/TabGraham";
 import { TabLynch } from "@/components/custom/home/TabLynch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const responseCeilingPrice = await getAll();
+  const tickersCeilingPrice = responseCeilingPrice?.data || [];
+
   return (
     <div className="relative">
       <DialogTicker className="mb-2 absolute right-0 max-[512px]:static" />
@@ -17,7 +21,7 @@ export default function HomePage() {
           <TabsTrigger value="lynch">Lynch</TabsTrigger>
         </TabsList>
         <TabsContent value="ceilingPrice">
-          <TabCeilingPrice />
+          <TabCeilingPrice tickers={tickersCeilingPrice} />
         </TabsContent>
         <TabsContent value="bazin">
           <TabBazin />

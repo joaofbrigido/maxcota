@@ -31,7 +31,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { DialogTicker } from "../../DialogTicker";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
