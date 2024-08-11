@@ -6,7 +6,7 @@ export const MyaccountForm = () => {
   return (
     <form>
       <div className="grid grid-cols-3 gap-5 mt-8 max-lg:grid-cols-2 max-sm:grid-cols-1">
-        <CustomInput label="Nome Completo" name="fullName" placeholder="Nome" />
+        {/* <CustomInput label="Nome Completo" name="fullName" placeholder="Nome" />
         <CustomInput label="E-mail" name="email" placeholder="e-mail" />
         <CustomInput
           label="Plano"
@@ -26,7 +26,7 @@ export const MyaccountForm = () => {
           name="confirmPassword"
           placeholder="Confirmação nova senha"
           type="password"
-        />
+        /> */}
       </div>
 
       <div className="flex gap-3 mt-8">

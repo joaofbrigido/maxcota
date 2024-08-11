@@ -19,13 +19,12 @@ export default function LostLoginPage() {
         para alterar a senha
       </p>
       <div className="flex flex-col gap-5 my-8">
-        <CustomInput
+        {/* <CustomInput
           label="E-mail"
           name="email"
           type="email"
           placeholder="nome@email.com"
-          isLogin
-        />
+        /> */}
       </div>
 
       <Button className="w-full">Enviar Reste de Senha</Button>

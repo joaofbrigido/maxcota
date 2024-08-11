@@ -18,20 +18,18 @@ export default function ResetLoginPage() {
         Preencha os campos abaixo para definir uma nova senha
       </p>
       <div className="flex flex-col gap-5 my-8">
-        <CustomInput
+        {/* <CustomInput
           label="Nova Senha"
           name="password"
           type="password"
           placeholder="senha"
-          isLogin
         />
         <CustomInput
           label="Confirmar Nova Senha"
           name="confirmPassword"
           type="password"
           placeholder="confirmar senha"
-          isLogin
-        />
+        /> */}
       </div>
 
       <Button className="w-full">Alterar Senha</Button>
