@@ -121,7 +121,41 @@ export async function update({
   }
 }
 
-export async function Delete() {}
+export async function deleteItem(tickerId: number) {
+  try {
+    if (!tickerId) {
+      return {
+        ok: false,
+        error: "ID do ativo não encontrado, tente novamente mais tarde.",
+        data: null,
+      };
+    }
+
+    const supabase = createClient();
+
+    const { error } = await supabase
+      .from("tickers")
+      .delete()
+      .eq("id", tickerId);
+
+    if (error) {
+      return {
+        ok: false,
+        error: error.message,
+        data: null,
+      };
+    }
+
+    revalidatePath("/");
+    return {
+      ok: true,
+      error: null,
+      data: null,
+    };
+  } catch (error) {
+    apiError(error);
+  }
+}
 
 export async function getAll() {
   try {

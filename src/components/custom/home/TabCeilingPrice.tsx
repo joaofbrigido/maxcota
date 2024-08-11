@@ -7,6 +7,9 @@ import { columns } from "./tableCeilingPrice/columns";
 import { Ticker, TickerTable } from "@/types/types";
 import { TableCeilingPrice } from "./tableCeilingPrice/data";
 import { useEffect, useState } from "react";
+import { DeleteConfirmDialog } from "../DeleteConfirmDialog";
+import { toast } from "sonner";
+import { deleteItem } from "@/actions/ticker";
 
 type TabCeilingPriceProps = {
   tickers: Ticker[];
@@ -16,6 +19,9 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [stocksTable, setStocksTable] = useState<TickerTable[]>([]);
   const [tickerEdit, setTickerEdit] = useState<Ticker | null>(null);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   function editTicker(tickerTable: TickerTable) {
     setTickerEdit({
@@ -29,8 +35,30 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
     setOpenDialog(true);
   }
 
-  function deleteTecker(tickerId: string) {
-    console.log(tickerId);
+  function handleOpenDeleteDialog(tickerId: string) {
+    setOpenDeleteDialog(true);
+    setDeleteId(Number(tickerId));
+  }
+
+  async function deleteTicker() {
+    if (deleteId) {
+      setDeleteLoading(true);
+      const response = await deleteItem(deleteId);
+
+      if (!response?.ok) {
+        toast.error("Erro ao deletar ativo", {
+          description: response?.error,
+        });
+        setDeleteLoading(false);
+        return;
+      }
+
+      toast.success("Ativo deletado com sucesso");
+      setDeleteLoading(false);
+      setOpenDeleteDialog(false);
+    } else {
+      toast.warning("ID do ativo não encontrado, tente novamente mais tarde.");
+    }
   }
 
   function getStocksTable(tickers: Ticker[]) {
@@ -71,13 +99,19 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
             columns={columns}
             data={stocksTable}
             onEdit={editTicker}
-            onDelete={deleteTecker}
+            onDelete={handleOpenDeleteDialog}
           />
           <DialogTicker
             openDialog={openDialog}
             setOpenDialog={setOpenDialog}
             needDialogTrigger={false}
             ticker={tickerEdit!}
+          />
+          <DeleteConfirmDialog
+            openDeleteDialog={openDeleteDialog}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+            deleteLoading={deleteLoading}
+            functionDelete={deleteTicker}
           />
         </div>
       )}

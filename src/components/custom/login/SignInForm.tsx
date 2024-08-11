@@ -24,10 +24,8 @@ export const SignInForm = () => {
     }
 
     const response = await signIn(email.value, password.value);
-    console.log(response);
 
     if (response?.error) {
-      console.log("teste");
       toast.error("Erro logar, tente novamente mais tarde", {
         description: response.error,
       });
