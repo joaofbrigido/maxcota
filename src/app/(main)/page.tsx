@@ -20,16 +20,16 @@ export default async function HomePage() {
           <TabsTrigger value="graham">Graham</TabsTrigger>
           <TabsTrigger value="lynch">Lynch</TabsTrigger>
         </TabsList>
-        <TabsContent value="ceilingPrice">
+        <TabsContent value="ceilingPrice" className="animeUp">
           <TabCeilingPrice tickers={tickersCeilingPrice} />
         </TabsContent>
-        <TabsContent value="bazin">
+        <TabsContent value="bazin" className="animeUp">
           <TabBazin />
         </TabsContent>
-        <TabsContent value="graham">
+        <TabsContent value="graham" className="animeUp">
           <TabGraham />
         </TabsContent>
-        <TabsContent value="lynch">
+        <TabsContent value="lynch" className="animeUp">
           <TabLynch />
         </TabsContent>
       </Tabs>

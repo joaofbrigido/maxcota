@@ -41,7 +41,10 @@ export const DialogTicker = ({
             </Button>
           </DialogTrigger>
         )}
-        <DialogContent className="min-w-[780px] max-lg:min-w-[90%] max-lg:max-w-[90%]">
+        <DialogContent
+          className="min-w-[780px] max-lg:min-w-[90%] max-lg:max-w-[90%]"
+          aria-describedby="Cadastrar Ativo"
+        >
           <DialogHeader>
             <DialogTitle>Cadastrar Ativo</DialogTitle>
           </DialogHeader>

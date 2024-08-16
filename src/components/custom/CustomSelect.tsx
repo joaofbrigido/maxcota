@@ -25,36 +25,13 @@ type CustomSelectProps = {
   placeholder: string;
   value: string;
   setValue: (value: string) => void;
-  // options: Option[];
+  options: Option[];
 };
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
 };
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "bbas3",
-    label: "Banco do Brasil (bbas3)",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
 
 export function CustomSelect({
   setValue,
@@ -62,8 +39,8 @@ export function CustomSelect({
   label,
   name,
   placeholder,
-}: // options,
-CustomSelectProps) {
+  options,
+}: CustomSelectProps) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -80,7 +57,7 @@ CustomSelectProps) {
             className="justify-between w-full"
           >
             {value
-              ? frameworks.find((framework) => framework.value === value)?.label
+              ? options.find((option) => option.value === value)?.label
               : placeholder}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -91,10 +68,10 @@ CustomSelectProps) {
             <CommandList>
               <CommandEmpty>Nenhum ativo encontrado</CommandEmpty>
               <CommandGroup>
-                {frameworks.map((framework) => (
+                {options.map((option) => (
                   <CommandItem
-                    key={framework.value}
-                    value={framework.value}
+                    key={option.value}
+                    value={option.value}
                     onSelect={(currentValue) => {
                       setValue(currentValue === value ? "" : currentValue);
                       setOpen(false);
@@ -103,10 +80,10 @@ CustomSelectProps) {
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        value === framework.value ? "opacity-100" : "opacity-0"
+                        value === option.value ? "opacity-100" : "opacity-0"
                       )}
                     />
-                    {framework.label}
+                    {option.label}
                   </CommandItem>
                 ))}
               </CommandGroup>

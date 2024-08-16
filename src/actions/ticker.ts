@@ -6,6 +6,7 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 
 type CreateProps = {
+  tickerId?: number;
   ticker: string;
   dividendYield: number;
   dpa: number;
@@ -61,6 +62,7 @@ export async function create({
 }
 
 export async function update({
+  tickerId,
   ticker,
   dividendYield,
   dpa,
@@ -99,7 +101,7 @@ export async function update({
         },
       ])
       .eq("user_id", user.id)
-      .eq("ticker", ticker)
+      .eq("id", tickerId)
       .select();
 
     if (error) {

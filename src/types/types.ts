@@ -44,3 +44,10 @@ export type Profile = {
   email: string;
   plan_id: number;
 };
+
+export type BrapiAvailableTickers = {
+  indexes: string[];
+  stocks: string[];
+  error?: string;
+  message?: string;
+};
