@@ -11,6 +11,7 @@ import { create, update } from "@/actions/ticker";
 import { toast } from "sonner";
 import { Ticker } from "@/types/types";
 import { getAllAvailable } from "@/actions/brapi";
+import { Loader } from "lucide-react";
 
 type TickerFormProps = {
   tickerEdit?: Ticker;
@@ -147,7 +148,9 @@ export const TickerForm = ({ tickerEdit, setOpenDialog }: TickerFormProps) => {
   return (
     <>
       {selectOptionsLoading ? (
-        <div>Carregando...</div>
+        <div>
+          <Loader className="animate-spin mr-3" />
+        </div>
       ) : (
         <form
           className="grid grid-cols-2 gap-5 py-2 max-sm:grid-cols-1"
