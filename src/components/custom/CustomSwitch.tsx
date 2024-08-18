@@ -5,6 +5,7 @@ type SwitchProps = {
   label: string;
   description?: string;
   checked: boolean;
+  className?: string;
   onCheckedChange: (value: boolean) => void;
 };
 
@@ -13,11 +14,12 @@ export const CustomSwitch = ({
   label,
   description,
   checked,
+  className,
   onCheckedChange,
 }: SwitchProps) => {
   return (
     <div>
-      <div className="flex items-center gap-3">
+      <div className={`flex items-center gap-3 ${className}`}>
         <Switch id={name} checked={checked} onCheckedChange={onCheckedChange} />
         <div>
           <label htmlFor={name} className="font-medium">

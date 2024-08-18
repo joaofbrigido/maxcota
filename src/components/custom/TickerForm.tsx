@@ -48,12 +48,12 @@ export const TickerForm = ({
     setLoading(true);
 
     if (
-      Number(dpa.value) < 0 ||
+      Number(dpa.value) <= 0 ||
       Number(stocksQuantity.value) < 0 ||
       Number(dividendYield.value) < 0
     ) {
       toast.warning(
-        "Quantidade de ações ou DPA ou dividend yield não podem ser negativos"
+        "Quantidade de ações ou DPA ou dividend yield não podem ser negativos ou iguais a zero"
       );
       setLoading(false);
       return;
@@ -95,8 +95,9 @@ export const TickerForm = ({
   }
 
   function handleChangeDpaAuto() {
-    setDpaAuto(!dpaAuto);
-    dpa.setValue("");
+    // setDpaAuto(!dpaAuto);
+    // dpa.setValue("");
+    toast.info("Em breve será disponível...");
   }
 
   function handleChangeIncludeWallet() {
@@ -195,6 +196,7 @@ export const TickerForm = ({
               description="Automático é a média DPA dos último 5 anos"
               checked={dpaAuto}
               onCheckedChange={handleChangeDpaAuto}
+              className="opacity-60"
             />
             <CustomInput
               label=""

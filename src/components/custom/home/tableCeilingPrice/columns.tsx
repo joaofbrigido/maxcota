@@ -2,10 +2,40 @@
 
 import { Button } from "@/components/ui/button";
 import { TickerTable } from "@/types/types";
+import { numberToString } from "@/utils/numberConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import Image from "next/image";
 
 export const columns: ColumnDef<TickerTable>[] = [
+  {
+    accessorKey: "logo",
+    header: "Logo",
+    cell: ({ row }) => {
+      const ticker = row.original;
+      return (
+        <div className="size-8 relative">
+          {ticker.logo ? (
+            <Image
+              fill
+              src={ticker.logo}
+              alt="foto do candidato"
+              className="rounded-full object-cover size-8"
+              sizes="( max-width: 768px) 40px"
+            />
+          ) : (
+            <Image
+              fill
+              src={"/logo-precoteto-black.png"}
+              alt="foto do candidato"
+              className="rounded-full object-cover size-8"
+              sizes="( max-width: 768px) 40px"
+            />
+          )}
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "ticker",
     header: ({ column }) => {
@@ -51,21 +81,21 @@ export const columns: ColumnDef<TickerTable>[] = [
       );
     },
   },
-  {
-    accessorKey: "currentYield",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Dividend Yield Atual
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "currentYield",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         className="p-0 hover:bg-transparent"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Dividend Yield Atual
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "expectedYield",
     header: ({ column }) => {
@@ -75,7 +105,7 @@ export const columns: ColumnDef<TickerTable>[] = [
           className="p-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Dividend Yield Esperado
+          DY. Esperado
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -123,6 +153,22 @@ export const columns: ColumnDef<TickerTable>[] = [
           Margem de Segurança
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const ticker = row.original;
+      const safetyMarginIsPositive = Number(ticker.safetyMargin) > 0;
+
+      return (
+        <div
+          className={`${
+            safetyMarginIsPositive
+              ? "text-green-800 bg-green-200"
+              : "text-red-800 bg-red-200"
+          } px-3 py-1 rounded-full font-medium inline`}
+        >
+          {numberToString(Number(ticker.safetyMargin))}%
+        </div>
       );
     },
   },

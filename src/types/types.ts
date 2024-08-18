@@ -11,12 +11,13 @@ export type TickerTable = {
   id: string;
   ticker: string;
   amount: number;
-  dpa: number;
-  currentYield: number;
-  expectedYield: number;
-  currentPrice: number;
-  ceilingPrice: number;
-  safetyMargin: number;
+  dpa: string;
+  // currentYield: string;
+  expectedYield: string;
+  currentPrice: string;
+  ceilingPrice: string;
+  safetyMargin: string;
+  logo: string;
 };
 
 export type TickerRanking = {
@@ -50,4 +51,16 @@ export type BrapiAvailableTickers = {
   stocks: string[];
   error?: string;
   message?: string;
+};
+
+export type BrapiTickers = {
+  change: number;
+  close: number;
+  logo: string;
+  market_cap: number;
+  name: string;
+  sector: string;
+  stock: string;
+  type: string;
+  volume: number;
 };
