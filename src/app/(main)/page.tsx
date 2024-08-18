@@ -12,7 +12,10 @@ export default async function HomePage() {
 
   return (
     <div className="relative">
-      <DialogTicker className="mb-2 absolute right-0 max-[512px]:static" />
+      <DialogTicker
+        className="mb-2 absolute right-0 max-[512px]:static"
+        myTickers={tickersCeilingPrice}
+      />
       <Tabs defaultValue="ceilingPrice">
         <TabsList className="max-[512px]:w-full">
           <TabsTrigger value="ceilingPrice">Preço Teto</TabsTrigger>

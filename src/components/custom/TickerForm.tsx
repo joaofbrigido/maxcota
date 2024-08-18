@@ -16,9 +16,14 @@ import { Loader } from "lucide-react";
 type TickerFormProps = {
   tickerEdit?: Ticker;
   setOpenDialog?: React.Dispatch<React.SetStateAction<boolean>>;
+  myTickers?: Ticker[];
 };
 
-export const TickerForm = ({ tickerEdit, setOpenDialog }: TickerFormProps) => {
+export const TickerForm = ({
+  tickerEdit,
+  setOpenDialog,
+  myTickers = [],
+}: TickerFormProps) => {
   const [dpaAuto, setDpaAuto] = useState(false);
   const [includeWallet, setIncludeWallet] = useState(false);
   const [ticker, setTicker] = useState("");
@@ -131,11 +136,21 @@ export const TickerForm = ({ tickerEdit, setOpenDialog }: TickerFormProps) => {
       };
     }) as Option[];
 
-    const stocksWithoutFractional = options.filter(
-      (option) => !option.label.toLowerCase().endsWith("f")
-    );
+    const myTickersOptions = myTickers?.map((ticker) => {
+      return {
+        label: ticker.ticker,
+        value: ticker.ticker,
+      };
+    }) as Option[];
 
-    setSelectOptions(stocksWithoutFractional);
+    const filteredStocks = options.filter((option) => {
+      return (
+        !option.label.toLowerCase().endsWith("f") &&
+        !myTickersOptions.some((myTicker) => myTicker.label === option.label)
+      );
+    });
+
+    setSelectOptions(filteredStocks);
     setSelectOptionsLoading(false);
   }
 

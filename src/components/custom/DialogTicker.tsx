@@ -20,6 +20,7 @@ type DialogTickerProps = {
   needDialogTrigger?: boolean;
   setOpenDialog?: React.Dispatch<React.SetStateAction<boolean>>;
   ticker?: Ticker;
+  myTickers?: Ticker[];
 };
 
 export const DialogTicker = ({
@@ -29,6 +30,7 @@ export const DialogTicker = ({
   setOpenDialog,
   needDialogTrigger = true,
   ticker,
+  myTickers,
 }: DialogTickerProps) => {
   return (
     <div className={className}>
@@ -48,7 +50,11 @@ export const DialogTicker = ({
           <DialogHeader>
             <DialogTitle>Cadastrar Ativo</DialogTitle>
           </DialogHeader>
-          <TickerForm tickerEdit={ticker} setOpenDialog={setOpenDialog!} />
+          <TickerForm
+            tickerEdit={ticker}
+            setOpenDialog={setOpenDialog!}
+            myTickers={myTickers}
+          />
         </DialogContent>
       </Dialog>
     </div>
