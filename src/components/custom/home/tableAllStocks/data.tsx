@@ -90,13 +90,13 @@ export function TableAllStocks<TData, TValue>({
           className="max-w-sm  max-[530px]:max-w-full"
         />
         <div className="flex gap-3 max-[530px]:w-full">
-          <Button
+          {/* <Button
             className="ml-auto bg-lime-300 hover:bg-lime-400 max-[530px]:w-full"
             variant="success"
           >
             <FileSpreadsheet size={20} className="mr-2" />
             Excel
-          </Button>
+          </Button> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

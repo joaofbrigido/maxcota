@@ -29,7 +29,6 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  // const [apiMyTickersData, setApiMyTickersData] = useState<BrapiTickers[]>([]);
   const [loadingTickersData, setLoadingTickersData] = useState(false);
 
   function editTicker(tickerTable: TickerTable) {
@@ -69,56 +68,6 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
       toast.warning("ID do ativo não encontrado, tente novamente mais tarde.");
     }
   }
-
-  // async function getInfoByMyTickers() {
-  //   setLoadingTickersData(true);
-  //   const response = await getInfoMyTickers(tickers);
-
-  //   if (!response?.ok) {
-  //     toast.error(response?.error);
-  //     setLoadingTickersData(false);
-  //     return;
-  //   }
-
-  //   setLoadingTickersData(false);
-  //   return response.data as BrapiTickers[];
-  // }
-
-  // async function getStocksTable() {
-  //   const apiMyTickersData = await getInfoByMyTickers();
-
-  //   if (!apiMyTickersData) return [];
-
-  //   const tableData: TickerTable[] = tickers.map((ticker) => {
-  //     const dataTicker = apiMyTickersData.find(
-  //       (item) => item.stock === ticker.ticker
-  //     );
-  //     const ceilingPrice =
-  //       ticker.dpa_year / (ticker.expected_dividend_yield / 100);
-  //     const currentPrice = dataTicker?.close ?? 0;
-  //     const safetyMargin =
-  //       ((ceilingPrice - currentPrice!) / ceilingPrice) * 100;
-
-  //     return {
-  //       id: ticker.id.toString(),
-  //       ticker: ticker.ticker,
-  //       amount: ticker.stocks_quantity,
-  //       dpa: numberToString(ticker.dpa_year),
-  //       logo: dataTicker?.logo ?? "",
-  //       expectedYield: `${numberToString(ticker.expected_dividend_yield)}%`,
-  //       currentPrice: numberToCurrency(currentPrice),
-  //       ceilingPrice: numberToCurrency(ceilingPrice),
-  //       safetyMargin: safetyMargin.toFixed(2),
-  //       // currentYield: "7%",
-  //     };
-  //   });
-
-  //   setStocksTable(tableData);
-  // }
-
-  // useEffect(() => {
-  //   getStocksTable();
-  // }, [tickers]);
 
   const getInfoByMyTickers = useCallback(async () => {
     setLoadingTickersData(true);

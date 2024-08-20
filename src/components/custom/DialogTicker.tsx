@@ -37,7 +37,7 @@ export const DialogTicker = ({
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         {needDialogTrigger && (
           <DialogTrigger asChild>
-            <Button>
+            <Button className="max-[512px]:w-full">
               <Plus size={20} className="mr-1" />
               {!onlyIcon && "Adicionar Ativo"}
             </Button>

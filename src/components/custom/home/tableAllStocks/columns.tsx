@@ -27,7 +27,7 @@ export const columns: ColumnDef<AllStocksTable>[] = [
             <Image
               fill
               src={"/logo-precoteto-black.png"}
-              alt={`sem logo`}
+              alt="Sem logo"
               className="rounded-full object-cover size-8"
               sizes="( max-width: 768px) 40px"
             />
