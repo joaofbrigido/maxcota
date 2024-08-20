@@ -63,22 +63,18 @@ export function TableAllStocks<TData, TValue>({
 
   function columnNames(idName: string) {
     switch (idName) {
-      case "rank":
-        return "Rank";
-      case "ticker":
+      case "logo":
+        return "Logo";
+      case "stock":
         return "Ativo";
-      case "currentPrice":
-        return "Preço Atual";
-      case "fairValue":
-        return "Valor Justo";
-      case "dividendYield":
-        return "Dividend Yield";
-      case "pvp":
-        return "PVP";
-      case "safetyMargin":
-        return "Marg. Seg.";
-      case "pegratio":
-        return "Pegratio";
+      case "close":
+        return "Valor Atual";
+      case "change":
+        return "Variação diária";
+      case "sector":
+        return "Setor";
+      case "type":
+        return "Tipo";
     }
   }
 
@@ -87,9 +83,9 @@ export function TableAllStocks<TData, TValue>({
       <div className="flex items-center pb-4 gap-3 justify-between max-[530px]:flex-col">
         <Input
           placeholder="Buscar Ativo..."
-          value={(table.getColumn("ticker")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("stock")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("ticker")?.setFilterValue(event.target.value)
+            table.getColumn("stock")?.setFilterValue(event.target.value)
           }
           className="max-w-sm  max-[530px]:max-w-full"
         />

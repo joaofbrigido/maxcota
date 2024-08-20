@@ -4,7 +4,7 @@ import { FileMinus2 } from "lucide-react";
 import { BgWhite } from "../BgWhite";
 import { DialogTicker } from "../DialogTicker";
 import { columns } from "./tableCeilingPrice/columns";
-import { BrapiTickers, Ticker, TickerTable } from "@/types/types";
+import { BrapiStock, Ticker, TickerTable } from "@/types/types";
 import { TableCeilingPrice } from "./tableCeilingPrice/data";
 import { useCallback, useEffect, useState } from "react";
 import { DeleteConfirmDialog } from "../DeleteConfirmDialog";
@@ -131,7 +131,7 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
     }
 
     setLoadingTickersData(false);
-    return response.data as BrapiTickers[];
+    return response.data as BrapiStock[];
   }, [tickers]);
 
   const getStocksTable = useCallback(async () => {

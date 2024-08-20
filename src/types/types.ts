@@ -20,7 +20,7 @@ export type TickerTable = {
   logo: string;
 };
 
-export type AllStocks = { 
+export type AllStocksTable = { 
   stock: string;
   logo: string;
   close: number;
@@ -50,7 +50,7 @@ export type BrapiAvailableTickers = {
   message?: string;
 };
 
-export type BrapiTickers = {
+export type BrapiStock = {
   change: number;
   close: number;
   logo: string;
