@@ -10,7 +10,12 @@ import { useCallback, useEffect, useState } from "react";
 import { DeleteConfirmDialog } from "../DeleteConfirmDialog";
 import { toast } from "sonner";
 import { deleteItem } from "@/actions/ticker";
-import { percentToNumber, stringToNumber } from "@/utils/numberConverter";
+import {
+  numberToCurrency,
+  numberToString,
+  percentToNumber,
+  stringToNumber,
+} from "@/utils/numberConverter";
 import { getInfoMyTickers } from "@/actions/brapi";
 
 type TabCeilingPriceProps = {
@@ -24,7 +29,7 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [apiMyTickersData, setApiMyTickersData] = useState<BrapiTickers[]>([]);
+  // const [apiMyTickersData, setApiMyTickersData] = useState<BrapiTickers[]>([]);
   const [loadingTickersData, setLoadingTickersData] = useState(false);
 
   function editTicker(tickerTable: TickerTable) {
@@ -65,7 +70,57 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
     }
   }
 
-  async function getInfoByMyTickers() {
+  // async function getInfoByMyTickers() {
+  //   setLoadingTickersData(true);
+  //   const response = await getInfoMyTickers(tickers);
+
+  //   if (!response?.ok) {
+  //     toast.error(response?.error);
+  //     setLoadingTickersData(false);
+  //     return;
+  //   }
+
+  //   setLoadingTickersData(false);
+  //   return response.data as BrapiTickers[];
+  // }
+
+  // async function getStocksTable() {
+  //   const apiMyTickersData = await getInfoByMyTickers();
+
+  //   if (!apiMyTickersData) return [];
+
+  //   const tableData: TickerTable[] = tickers.map((ticker) => {
+  //     const dataTicker = apiMyTickersData.find(
+  //       (item) => item.stock === ticker.ticker
+  //     );
+  //     const ceilingPrice =
+  //       ticker.dpa_year / (ticker.expected_dividend_yield / 100);
+  //     const currentPrice = dataTicker?.close ?? 0;
+  //     const safetyMargin =
+  //       ((ceilingPrice - currentPrice!) / ceilingPrice) * 100;
+
+  //     return {
+  //       id: ticker.id.toString(),
+  //       ticker: ticker.ticker,
+  //       amount: ticker.stocks_quantity,
+  //       dpa: numberToString(ticker.dpa_year),
+  //       logo: dataTicker?.logo ?? "",
+  //       expectedYield: `${numberToString(ticker.expected_dividend_yield)}%`,
+  //       currentPrice: numberToCurrency(currentPrice),
+  //       ceilingPrice: numberToCurrency(ceilingPrice),
+  //       safetyMargin: safetyMargin.toFixed(2),
+  //       // currentYield: "7%",
+  //     };
+  //   });
+
+  //   setStocksTable(tableData);
+  // }
+
+  // useEffect(() => {
+  //   getStocksTable();
+  // }, [tickers]);
+
+  const getInfoByMyTickers = useCallback(async () => {
     setLoadingTickersData(true);
     const response = await getInfoMyTickers(tickers);
 
@@ -75,14 +130,16 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
       return;
     }
 
-    setApiMyTickersData(response.data as BrapiTickers[]);
     setLoadingTickersData(false);
-  }
+    return response.data as BrapiTickers[];
+  }, [tickers]);
 
-  function getStocksTable(tickers: Ticker[]) {
-    if (!apiMyTickersData.length) return [];
+  const getStocksTable = useCallback(async () => {
+    const apiMyTickersData = await getInfoByMyTickers();
 
-    const stocksTable: TickerTable[] = tickers.map((ticker) => {
+    if (!apiMyTickersData) return [];
+
+    const tableData: TickerTable[] = tickers.map((ticker) => {
       const dataTicker = apiMyTickersData.find(
         (item) => item.stock === ticker.ticker
       );
@@ -96,30 +153,22 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
         id: ticker.id.toString(),
         ticker: ticker.ticker,
         amount: ticker.stocks_quantity,
-        dpa: ticker.dpa_year.toLocaleString("pt-BR"),
+        dpa: numberToString(ticker.dpa_year),
         logo: dataTicker?.logo ?? "",
-        // currentYield: "7%",
-        expectedYield: `${ticker.expected_dividend_yield.toLocaleString(
-          "pt-BR"
-        )}%`,
-        currentPrice: currentPrice!.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
-        ceilingPrice: ceilingPrice.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }),
+        expectedYield: `${numberToString(ticker.expected_dividend_yield)}%`,
+        currentPrice: numberToCurrency(currentPrice),
+        ceilingPrice: numberToCurrency(ceilingPrice),
         safetyMargin: safetyMargin.toFixed(2),
+        // currentYield: "7%",
       };
     });
-    return stocksTable;
-  }
+
+    setStocksTable(tableData);
+  }, [tickers, getInfoByMyTickers]);
 
   useEffect(() => {
-    getInfoByMyTickers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getStocksTable();
+  }, [getStocksTable]);
 
   return (
     <BgWhite fullHeight>
@@ -136,7 +185,7 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
         <div>
           <TableCeilingPrice
             columns={columns}
-            data={getStocksTable(tickers)}
+            data={stocksTable}
             onEdit={editTicker}
             onDelete={handleOpenDeleteDialog}
           />

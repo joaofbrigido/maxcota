@@ -86,6 +86,8 @@ export function TableCeilingPrice<TData, TValue>({
         return "Preço Teto";
       case "safetyMargin":
         return "Marg. Seg.";
+      case "logo":
+        return "Logo";
     }
   }
 
