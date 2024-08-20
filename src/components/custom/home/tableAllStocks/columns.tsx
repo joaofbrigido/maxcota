@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { TickerTable } from "@/types/types";
-import { numberToString } from "@/utils/numberConverter";
+import { AllStocksTable } from "@/types/types";
+import { numberToCurrency } from "@/utils/numberConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 
-export const columns: ColumnDef<TickerTable>[] = [
+export const columns: ColumnDef<AllStocksTable>[] = [
   {
     accessorKey: "logo",
     header: "Logo",
@@ -19,7 +19,7 @@ export const columns: ColumnDef<TickerTable>[] = [
             <Image
               fill
               src={ticker.logo}
-              alt={ticker.ticker}
+              alt={`${ticker.stock} logo`}
               className="rounded-full object-cover size-8"
               sizes="( max-width: 768px) 40px"
             />
@@ -37,7 +37,7 @@ export const columns: ColumnDef<TickerTable>[] = [
     },
   },
   {
-    accessorKey: "ticker",
+    accessorKey: "stock",
     header: ({ column }) => {
       return (
         <Button
@@ -52,7 +52,7 @@ export const columns: ColumnDef<TickerTable>[] = [
     },
   },
   {
-    accessorKey: "amount",
+    accessorKey: "close",
     header: ({ column }) => {
       return (
         <Button
@@ -60,114 +60,79 @@ export const columns: ColumnDef<TickerTable>[] = [
           className="p-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Qtd Cotas
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "dpa",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          DPA
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  // {
-  //   accessorKey: "currentYield",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         className="p-0 hover:bg-transparent"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Dividend Yield Atual
-  //         <ArrowUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  // },
-  {
-    accessorKey: "expectedYield",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          DY. Esperado
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "currentPrice",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Preço Atual
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "ceilingPrice",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Preço Teto
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "safetyMargin",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Margem de Segurança
+          Valor Atual
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
       const ticker = row.original;
-      const safetyMarginIsPositive = Number(ticker.safetyMargin) > 0;
-
+      return <div>{numberToCurrency(ticker.close)}</div>;
+    },
+  },
+  {
+    accessorKey: "change",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Variação diária
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const ticker = row.original;
       return (
         <div
-          className={`${
-            safetyMarginIsPositive
-              ? "text-green-800 bg-green-200"
-              : "text-red-800 bg-red-200"
-          } px-3 py-1 rounded-full font-medium inline`}
+          className={`${ticker.change < 0 ? "text-red-500" : "text-green-500"}`}
         >
-          {numberToString(Number(ticker.safetyMargin))}%
+          {ticker.change.toFixed(2)}%
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "sector",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Setor
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "type",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Tipo
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const ticker = row.original;
+      return (
+        <div>
+          {ticker.type === "stock"
+            ? "Ação"
+            : ticker.type === "fund"
+            ? "FII"
+            : "BDR"}
         </div>
       );
     },
