@@ -52,7 +52,7 @@ export async function getInfoMyTickers(myTickers: Ticker[]) {
 export async function getAllStocks() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BRAPI_URL}/quote/list?limit=150&token=${process.env.NEXT_PUBLIC_BRAPI_TOKEN}`,
+      `${process.env.NEXT_PUBLIC_BRAPI_URL}/quote/list?limit=420&sortBy=volume&token=${process.env.NEXT_PUBLIC_BRAPI_TOKEN}`,
       { next: { revalidate: 60 * 30 } } // a cada 30 minutos
     );
 
@@ -66,10 +66,14 @@ export async function getAllStocks() {
       };
     }
 
+    const filteredFractionStocks = data?.stocks.filter(
+      (stock) => !stock.stock.toLowerCase().endsWith("f")
+    );
+
     return {
       ok: true,
       error: null,
-      data: data.stocks,
+      data: filteredFractionStocks,
     };
   } catch (error) {
     apiError(error);
