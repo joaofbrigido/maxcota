@@ -19,7 +19,7 @@ export const columns: ColumnDef<TickerTable>[] = [
             <Image
               fill
               src={ticker.logo}
-              alt="foto do candidato"
+              alt={`${ticker.ticker} logo`}
               className="rounded-full object-cover size-8"
               sizes="( max-width: 768px) 40px"
             />
@@ -27,7 +27,7 @@ export const columns: ColumnDef<TickerTable>[] = [
             <Image
               fill
               src={"/logo-precoteto-black.png"}
-              alt="foto do candidato"
+              alt="sem logo"
               className="rounded-full object-cover size-8"
               sizes="( max-width: 768px) 40px"
             />

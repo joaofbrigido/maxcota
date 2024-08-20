@@ -1,28 +1,43 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { TickerRanking } from "@/types/types";
+import { AllStocks } from "@/types/types";
+import { numberToCurrency } from "@/utils/numberConverter";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import Image from "next/image";
 
-export const columns: ColumnDef<TickerRanking>[] = [
+export const columns: ColumnDef<AllStocks>[] = [
   {
-    accessorKey: "rank",
-    header: ({ column }) => {
+    accessorKey: "logo",
+    header: "Logo",
+    cell: ({ row }) => {
+      const ticker = row.original;
       return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Ranking
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="size-8 relative">
+          {ticker.logo ? (
+            <Image
+              fill
+              src={ticker.logo}
+              alt={`${ticker.stock} logo`}
+              className="rounded-full object-cover size-8"
+              sizes="( max-width: 768px) 40px"
+            />
+          ) : (
+            <Image
+              fill
+              src={"/logo-precoteto-black.png"}
+              alt={`sem logo`}
+              className="rounded-full object-cover size-8"
+              sizes="( max-width: 768px) 40px"
+            />
+          )}
+        </div>
       );
     },
   },
   {
-    accessorKey: "ticker",
+    accessorKey: "stock",
     header: ({ column }) => {
       return (
         <Button
@@ -37,7 +52,7 @@ export const columns: ColumnDef<TickerRanking>[] = [
     },
   },
   {
-    accessorKey: "currentPrice",
+    accessorKey: "close",
     header: ({ column }) => {
       return (
         <Button
@@ -50,9 +65,13 @@ export const columns: ColumnDef<TickerRanking>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const ticker = row.original;
+      return <div>{numberToCurrency(ticker.close)}</div>;
+    },
   },
   {
-    accessorKey: "fairValue",
+    accessorKey: "change",
     header: ({ column }) => {
       return (
         <Button
@@ -60,14 +79,39 @@ export const columns: ColumnDef<TickerRanking>[] = [
           className="p-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Valor Justo
+          Variação diária
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const ticker = row.original;
+      return (
+        <div
+          className={`${ticker.change < 0 ? "text-red-500" : "text-green-500"}`}
+        >
+          {ticker.change.toFixed(2)}%
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "sector",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="p-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Setor
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "dividendYield",
+    accessorKey: "type",
     header: ({ column }) => {
       return (
         <Button
@@ -75,45 +119,27 @@ export const columns: ColumnDef<TickerRanking>[] = [
           className="p-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Dividend Yield
+          Tipo
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "pvp",
-    header: ({ column }) => {
+    cell: ({ row }) => {
+      const ticker = row.original;
       return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          P/VP
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "safetyMargin",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Margem de Segurança
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div>
+          {ticker.type === "stock"
+            ? "Ação"
+            : ticker.type === "fund"
+            ? "FII"
+            : "BDR"}
+        </div>
       );
     },
   },
 ];
 
-export const columnsLynch: ColumnDef<TickerRanking>[] = [
+export const columnsLynch: ColumnDef<AllStocks>[] = [
   {
     accessorKey: "rank",
     header: ({ column }) => {

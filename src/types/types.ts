@@ -20,16 +20,13 @@ export type TickerTable = {
   logo: string;
 };
 
-export type TickerRanking = {
-  id: string;
-  rank: number;
-  ticker: string;
-  currentPrice: number;
-  fairValue: number;
-  dividendYield: number;
-  pvp: number;
-  safetyMargin: number;
-  pegratio?: number;
+export type AllStocks = { 
+  stock: string;
+  logo: string;
+  close: number;
+  change: number;
+  sector: string;
+  type: string;
 };
 
 export type TickerWallet = {
