@@ -20,16 +20,13 @@ export type TickerTable = {
   logo: string;
 };
 
-export type TickerRanking = {
-  id: string;
-  rank: number;
-  ticker: string;
-  currentPrice: number;
-  fairValue: number;
-  dividendYield: number;
-  pvp: number;
-  safetyMargin: number;
-  pegratio?: number;
+export type AllStocksTable = { 
+  stock: string;
+  logo: string;
+  close: number;
+  change: number;
+  sector: string;
+  type: string;
 };
 
 export type TickerWallet = {
@@ -53,7 +50,7 @@ export type BrapiAvailableTickers = {
   message?: string;
 };
 
-export type BrapiTickers = {
+export type BrapiStock = {
   change: number;
   close: number;
   logo: string;
