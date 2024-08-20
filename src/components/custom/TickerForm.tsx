@@ -200,7 +200,7 @@ export const TickerForm = ({
             />
             <CustomInput
               label=""
-              placeholder="Insira DPA"
+              placeholder="Insira DPA/ano"
               name="dpaManual"
               type="number"
               disabled={dpaAuto}
