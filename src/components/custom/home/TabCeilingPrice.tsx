@@ -1,6 +1,6 @@
 "use client";
 
-import { FileMinus2 } from "lucide-react";
+import { FileMinus2, Loader } from "lucide-react";
 import { BgWhite } from "../BgWhite";
 import { DialogTicker } from "../DialogTicker";
 import { columns } from "./tableCeilingPrice/columns";
@@ -29,7 +29,7 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [loadingTickersData, setLoadingTickersData] = useState(false);
+  const [loadingDataTable, setLoadingDataTable] = useState(false);
 
   function editTicker(tickerTable: TickerTable) {
     setTickerEdit({
@@ -70,23 +70,25 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
   }
 
   const getInfoByMyTickers = useCallback(async () => {
-    setLoadingTickersData(true);
     const response = await getInfoMyTickers(tickers);
 
     if (!response?.ok) {
       toast.error(response?.error);
-      setLoadingTickersData(false);
       return;
     }
 
-    setLoadingTickersData(false);
     return response.data as BrapiStock[];
   }, [tickers]);
 
-  const getStocksTable = useCallback(async () => {
+  const getDataTable = useCallback(async () => {
+    setLoadingDataTable(true);
     const apiMyTickersData = await getInfoByMyTickers();
 
-    if (!apiMyTickersData) return [];
+    if (!apiMyTickersData) {
+      toast.error("Erro ao carregar dados dos ativos");
+      setLoadingDataTable(false);
+      return [];
+    }
 
     const tableData: TickerTable[] = tickers.map((ticker) => {
       const dataTicker = apiMyTickersData.find(
@@ -113,11 +115,12 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
     });
 
     setStocksTable(tableData);
+    setLoadingDataTable(false);
   }, [tickers, getInfoByMyTickers]);
 
   useEffect(() => {
-    getStocksTable();
-  }, [getStocksTable]);
+    getDataTable();
+  }, [getDataTable]);
 
   return (
     <BgWhite fullHeight>
@@ -129,6 +132,10 @@ export const TabCeilingPrice = ({ tickers }: TabCeilingPriceProps) => {
             o preço teto
           </p>
           <DialogTicker openDialog={openDialog} setOpenDialog={setOpenDialog} />
+        </div>
+      ) : loadingDataTable ? (
+        <div>
+          <Loader className="m-auto h-8 w-8 animate-spin text-amber-500" />
         </div>
       ) : (
         <div>

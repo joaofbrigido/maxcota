@@ -139,7 +139,7 @@ export const columns: ColumnDef<AllStocksTable>[] = [
         <div
           className={`${ticker.change < 0 ? "text-red-500" : "text-green-500"}`}
         >
-          {ticker.change.toFixed(2)}%
+          {ticker.change ? ticker.change.toFixed(2) : 0}%
         </div>
       );
     },
