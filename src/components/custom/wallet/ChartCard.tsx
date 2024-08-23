@@ -22,6 +22,7 @@ type ChartCardProps = {
   title: string;
   whichChart: "ativo" | "setor" | "acaoFiis";
   ativosData?: { ticker: string; total: number }[] | [];
+  sectorData?: { setor: string; percentage: number }[] | [];
   percentageAcao?: number;
   percentageFiis?: number;
 };
@@ -32,48 +33,8 @@ export const ChartCard = ({
   ativosData,
   percentageAcao,
   percentageFiis,
+  sectorData,
 }: ChartCardProps) => {
-  // const ativosData = [
-  //   { ticker: "bbas3", total: 275, fill: "#fde047" },
-  //   { ticker: "bbes3", total: 200, fill: "#facc15" },
-  //   { ticker: "trpl4", total: 187, fill: "#eab308" },
-  //   { ticker: "sapr4", total: 173, fill: "#ca8a04" },
-  //   { ticker: "itsa4", total: 70, fill: "#b45309" },
-  // ];
-
-  // const ativosCongif = {
-  //   total: {
-  //     label: "% Total",
-  //   },
-  //   bbas3: {
-  //     label: "BBAS3",
-  //     color: "hsl(var(--chart-1))",
-  //   },
-  //   bbes3: {
-  //     label: "BBES3",
-  //     color: "hsl(var(--chart-2))",
-  //   },
-  //   trpl4: {
-  //     label: "TRPL4",
-  //     color: "hsl(var(--chart-3))",
-  //   },
-  //   sapr4: {
-  //     label: "SAPR4",
-  //     color: "hsl(var(--chart-4))",
-  //   },
-  //   itsa4: {
-  //     label: "ITSA4",
-  //     color: "hsl(var(--chart-5))",
-  //   },
-  // } satisfies ChartConfig;
-
-  const setorData = [
-    { setor: "Setor 1", percentage: 25 },
-    { setor: "Setor 2", percentage: 35 },
-    { setor: "Setor 3", percentage: 20 },
-    { setor: "Setor 4", percentage: 10 },
-    { setor: "Setor 5", percentage: 10 },
-  ];
   const setorConfig = {
     percentage: {
       label: "%",
@@ -111,7 +72,7 @@ export const ChartCard = ({
 
       return {
         ticker: item.ticker,
-        total: percentage,
+        total: Number(percentage.toFixed(2)),
         fill: fill,
       };
     });
@@ -191,7 +152,7 @@ export const ChartCard = ({
         >
           <BarChart
             accessibilityLayer
-            data={setorData}
+            data={sectorData}
             layout="vertical"
             margin={{
               right: 16,
