@@ -35,11 +35,13 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  total: string;
 }
 
 export function TableWallet<TData, TValue>({
   columns,
   data,
+  total,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -166,7 +168,7 @@ export function TableWallet<TData, TValue>({
           <TableFooter>
             <TableRow>
               <TableCell>Total</TableCell>
-              <TableCell>R$ 67.945,32</TableCell>
+              <TableCell>{total}</TableCell>
               <TableCell>100%</TableCell>
             </TableRow>
           </TableFooter>

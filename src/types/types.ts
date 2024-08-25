@@ -20,7 +20,7 @@ export type TickerTable = {
   logo: string;
 };
 
-export type AllStocksTable = { 
+export type AllStocksTable = {
   stock: string;
   logo: string;
   close: number;
@@ -31,8 +31,8 @@ export type AllStocksTable = {
 
 export type TickerWallet = {
   ticker: string;
-  totalReais: number;
-  totalPercentage: number;
+  totalReais: string;
+  totalPercentage: string;
 };
 
 export type Profile = {

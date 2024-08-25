@@ -1,3 +1,5 @@
+"use server";
+
 import { BrapiAvailableTickers, BrapiStock, Ticker } from "@/types/types";
 import apiError from "@/utils/apiError";
 

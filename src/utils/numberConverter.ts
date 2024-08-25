@@ -14,7 +14,7 @@ export function numberToCurrency(num: number) {
 }
 
 export function currencyToNumber(str: string) {
-  return Number(str.replace("R$", "").replace(",", "."));
+  return Number(str.replace("R$", "").replace(",", ".").replace(".", ""));
 }
 
 export function percentToNumber(str: string) {
