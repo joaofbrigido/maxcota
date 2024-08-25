@@ -22,7 +22,6 @@ import {
 type walletTicker = {
   ticker: string;
   totalReais: number;
-  // totalPercentage: number;
   type: string;
   sector: string;
 };
@@ -101,9 +100,93 @@ export default async function WalletPage() {
     });
   }
 
+  function translateSector(sector: string) {
+    switch (sector) {
+      case "Retail Trade":
+        return "Comércio Varejista";
+      case "Energy Minerals":
+        return "Minerais Energéticos";
+      case "Health Services":
+        return "Serviços de Saúde";
+      case "Utilities":
+        return "Utilidades";
+      case "Finance":
+        return "Finanças";
+      case "Consumer Services":
+        return "Serviços ao Consumidor";
+      case "Consumer Non-Durables":
+        return "Bens de Consumo Não Duráveis";
+      case "Non-Energy Minerals":
+        return "Minerais não Energéticos";
+      case "Commercial Services":
+        return "Serviços Comerciais";
+      case "Distribution Services":
+        return "Serviços de Distribuição";
+      case "Transportation":
+        return "Transporte";
+      case "Technology Services":
+        return "Serviços de Tecnologia";
+      case "Process Industries":
+        return "Indústrias de Processo";
+      case "Communications":
+        return "Comunicações";
+      case "Producer Manufacturing":
+        return "Manufatura de Produtores";
+      case "Miscellaneous":
+        return "Diversos";
+      case "Electronic Technology":
+        return "Tecnologia Eletrônica";
+      case "Industrial Services":
+        return "Serviços Industriais";
+      case "Health Technology":
+        return "Tecnologia de Saúde";
+      case "Consumer Durables":
+        return "Bens de Consumo Duráveis";
+      case null:
+        return "Outros";
+      default:
+        return "-";
+    }
+  }
+
   function getDivisionBySector() {
-    // [setor: string; percentage: number;]
     const walletTickers = getWalletTickers();
+    const totalInNumber = currencyToNumber(getTotalInReais());
+
+    const sectorSums = walletTickers.reduce((acc, curr) => {
+      if (acc[curr.sector]) {
+        acc[curr.sector] += curr.totalReais;
+      } else {
+        acc[curr.sector] = curr.totalReais;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.keys(sectorSums).map((sector) => ({
+      sector: translateSector(sector),
+      percentage: +((sectorSums[sector] / totalInNumber) * 100).toFixed(2),
+    }));
+  }
+
+  function getStockXFii() {
+    const walletTickers = getWalletTickers();
+    const totalInNumber = currencyToNumber(getTotalInReais());
+
+    const fundTotal = walletTickers
+      .filter((ticker) => ticker.type === "fund")
+      .reduce((acc, curr) => acc + curr.totalReais, 0);
+
+    const stockTotal = walletTickers
+      .filter((ticker) => ticker.type === "stock")
+      .reduce((acc, curr) => acc + curr.totalReais, 0);
+
+    const fundPercentage = (fundTotal / totalInNumber) * 100;
+    const stockPercentage = (stockTotal / totalInNumber) * 100;
+
+    return {
+      fundPercentage: +fundPercentage.toFixed(2),
+      stockPercentage: +stockPercentage.toFixed(2),
+    };
   }
 
   return (
@@ -157,13 +240,13 @@ export default async function WalletPage() {
             <ChartCard
               title="Divisão por Setor"
               whichChart="setor"
-              sectorData={[]}
+              sectorData={getDivisionBySector()}
             />
             <ChartCard
               title="Ação x FIIs"
               whichChart="acaoFiis"
-              percentageAcao={63}
-              percentageFiis={37}
+              percentageAcao={getStockXFii().stockPercentage}
+              percentageFiis={getStockXFii().fundPercentage}
             />
           </div>
 

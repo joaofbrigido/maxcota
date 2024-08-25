@@ -22,7 +22,7 @@ type ChartCardProps = {
   title: string;
   whichChart: "ativo" | "setor" | "acaoFiis";
   ativosData?: { ticker: string; total: number }[] | [];
-  sectorData?: { setor: string; percentage: number }[] | [];
+  sectorData?: { sector: string; percentage: number }[] | [];
   percentageAcao?: number;
   percentageFiis?: number;
 };
@@ -155,12 +155,12 @@ export const ChartCard = ({
             data={sectorData}
             layout="vertical"
             margin={{
-              right: 16,
+              right: 40,
             }}
           >
             <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="setor"
+              dataKey="sector"
               type="category"
               tickLine={false}
               tickMargin={10}
@@ -180,7 +180,7 @@ export const ChartCard = ({
               radius={4}
             >
               <LabelList
-                dataKey="setor"
+                dataKey="sector"
                 position="insideLeft"
                 offset={8}
                 className="fill-[--color-label]"
