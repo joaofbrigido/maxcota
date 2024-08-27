@@ -4,6 +4,7 @@ import { chooseFirstPlan } from "@/actions/login";
 import { CustomButton } from "../CustomButton";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Profile } from "@/types/types";
 
 type PlansCardProps = {
   name: string;
@@ -11,6 +12,7 @@ type PlansCardProps = {
   popular?: boolean;
   children?: React.ReactNode;
   plan: "monthly" | "vitality";
+  profile?: Profile;
 };
 
 export const PlansCard = ({
@@ -19,6 +21,7 @@ export const PlansCard = ({
   popular,
   children,
   plan,
+  profile,
 }: PlansCardProps) => {
   const [loading, setLoading] = useState(false);
 
@@ -75,7 +78,7 @@ export const PlansCard = ({
         className="w-full"
         isLoading={loading}
         onclick={handleChangePlan}
-        disabled={false /* Desativar para plano mensal */}
+        disabled={!popular && profile?.plan_id === 1}
       >
         Selecionar
       </CustomButton>
