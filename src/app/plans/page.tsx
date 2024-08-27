@@ -21,6 +21,8 @@ export default async function PlansPage() {
     toast.error("Erro ao consultar usuário", {
       description: error.message,
     });
+
+    return <div>Erro ao consultar usuário. Tente novamente mais tarde.</div>;
   }
 
   return (
@@ -53,7 +55,12 @@ export default async function PlansPage() {
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-5 max-sm:grid-cols-1">
-          <PlansCard name="Pro Mensal" price="9,00" plan="monthly">
+          <PlansCard
+            name="Pro Mensal"
+            price="9,00"
+            plan="monthly"
+            profile={profile}
+          >
             <PlansCardItem title="Ranking método Bazin de todos os ativos" />
             <PlansCardItem title="Ranking método Graham de todos os ativos" />
             <PlansCardItem title="Ranking método Lynch de todos os ativos" />
@@ -65,7 +72,13 @@ export default async function PlansPage() {
             <PlansCardItem title="Suporte via email" />
           </PlansCard>
 
-          <PlansCard name="Pro Vitalício" price="69,00" popular plan="vitality">
+          <PlansCard
+            name="Pro Vitalício"
+            price="69,00"
+            popular
+            plan="vitality"
+            profile={profile}
+          >
             <PlansCardItem title="Ranking método Bazin de todos os ativos" />
             <PlansCardItem title="Ranking método Graham de todos os ativos" />
             <PlansCardItem title="Ranking método Lynch de todos os ativos" />
