@@ -75,13 +75,15 @@ export const Header = ({ profile }: { profile: Profile }) => {
       </div>
       <Popover>
         <PopoverTrigger asChild>
-          <button className="flex items-center gap-3">
-            <span className="text-amber-50 primary-color-y py-2 px-3 rounded-full font-bold text-lg max-sm:hidden">
+          <button className="flex items-center gap-3 max-sm:gap-1">
+            <span className="text-amber-50 primary-color-y py-2 px-3 rounded-full font-bold text-lg">
               {getFirstTwoLetters()}
             </span>
             <div>
-              <h3 className="font-bold text-left">{getFirstTwoNames()}</h3>
-              <p className="flex gap-2 items-center text-stone-950/70 text-left">
+              <h3 className="font-bold text-left max-sm:hidden">
+                {getFirstTwoNames()}
+              </h3>
+              <p className="flex gap-2 items-center text-stone-950/70 text-left max-sm:hidden">
                 Plano: {getPlanName()}
               </p>
             </div>

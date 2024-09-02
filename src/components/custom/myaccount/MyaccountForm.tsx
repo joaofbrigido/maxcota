@@ -94,6 +94,7 @@ export const MyaccountForm = ({ profile }: { profile: Profile }) => {
               label="E-mail"
               name="email"
               placeholder="e-mail"
+              disabled
               required
               {...email}
             />
