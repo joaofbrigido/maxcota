@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { ChevronDown, CircleUserRound, LogOut, TrendingUp } from "lucide-react";
+import { ChevronDown, CircleAlert, LogOut, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { MenuMobile } from "./MenuMobile";
 import { toast } from "sonner";
@@ -20,6 +20,8 @@ export const Header = ({ profile }: { profile: Profile }) => {
         return "Carteira";
       case "/myaccount":
         return "Minha conta";
+      case "/about":
+        return "Sobre o Preço Teto";
     }
   }
 
@@ -98,11 +100,11 @@ export const Header = ({ profile }: { profile: Profile }) => {
             <ul className="flex flex-col gap-4">
               <li>
                 <Link
-                  href={"/myaccount"}
+                  href={"/about"}
                   className="flex items-center gap-2 hover:text-amber-500 transition"
                 >
-                  <CircleUserRound size={16} />
-                  Minha Conta
+                  <CircleAlert size={16} />
+                  Fórmula do Preço Teto
                 </Link>
               </li>
               {profile?.plan_id === 1 && (
