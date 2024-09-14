@@ -22,9 +22,9 @@ export const MyaccountForm = ({ profile }: { profile: Profile }) => {
   function getPlanName() {
     switch (profile.plan_id) {
       case 1:
-        return "Mensal";
+        return "Standard";
       case 2:
-        return "Vitalicio";
+        return "Pro";
       default:
         return "";
     }
@@ -127,7 +127,7 @@ export const MyaccountForm = ({ profile }: { profile: Profile }) => {
                 href="/plans"
                 className="primary-color-x text-amber-50 hover:brightness-105 transition hover:shadow-lg hover:shadow-amber-500/30 px-4 py-2 rounded-md font-bold text-sm leading-6"
               >
-                Alterar para Vitalício
+                Alterar para Pro
               </Link>
             )}
             <CustomButton variant="success" isLoading={loadingSubmit}>

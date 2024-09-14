@@ -56,38 +56,34 @@ export default async function PlansPage() {
 
         <div className="mt-12 grid grid-cols-2 gap-5 max-sm:grid-cols-1">
           <PlansCard
-            name="Pro Mensal"
-            price="9,00"
-            plan="monthly"
+            name="Standard"
+            price="39,00"
+            plan="standard"
             profile={profile}
           >
-            <PlansCardItem title="Ranking método Bazin de todos os ativos" />
-            <PlansCardItem title="Ranking método Graham de todos os ativos" />
-            <PlansCardItem title="Ranking método Lynch de todos os ativos" />
+            <PlansCardItem title="Controle de preço teto de no max. 15 ativos" />
             <PlansCardItem
               title="Acompanhamento de Carteira"
               description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo e muito mais"
             />
-            <PlansCardItem title="Exportação de tabelas em excel" />
             <PlansCardItem title="Suporte via email" />
+            <PlansCardItem title="Exportação de tabelas em excel" notSupport />
           </PlansCard>
 
           <PlansCard
-            name="Pro Vitalício"
+            name="Pro"
             price="69,00"
             popular
-            plan="vitality"
+            plan="pro"
             profile={profile}
           >
-            <PlansCardItem title="Ranking método Bazin de todos os ativos" />
-            <PlansCardItem title="Ranking método Graham de todos os ativos" />
-            <PlansCardItem title="Ranking método Lynch de todos os ativos" />
+            <PlansCardItem title="Controle de preço teto de ilimitados ativos " />
             <PlansCardItem
               title="Acompanhamento de Carteira"
               description="~ Métricas e gráficos de divisão da carteira por setor, total acumulado, representação em porcentagem de cada ativo e muito mais"
             />
+            <PlansCardItem title="Prioridade no suporte via email" />
             <PlansCardItem title="Exportação de tabelas em excel" />
-            <PlansCardItem title="Suporte via email" />
           </PlansCard>
         </div>
       </div>

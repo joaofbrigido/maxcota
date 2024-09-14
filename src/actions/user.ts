@@ -1,5 +1,6 @@
 "use server";
 
+import { Profile } from "@/types/types";
 import apiError from "@/utils/apiError";
 import { createClient } from "@/utils/supabase/server";
 import { User } from "@supabase/auth-js";
@@ -118,5 +119,41 @@ export async function updateProfile({
     ok: true,
     error: null,
     data: data,
+  };
+}
+
+export async function getProfile() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      ok: false,
+      error: "Usuário não encontrado, tente novamente mais tarde.",
+      data: null,
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("profiles")
+    .select()
+    .eq("id", user.id)
+    .single();
+
+  if (error) {
+    return {
+      ok: false,
+      error: error.message,
+      data: null,
+    };
+  }
+
+  return {
+    ok: true,
+    error: null,
+    data: data as Profile,
   };
 }
