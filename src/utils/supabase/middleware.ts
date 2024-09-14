@@ -82,7 +82,7 @@ export async function updateSession(request: NextRequest) {
         return NextResponse.redirect(url);
       }
 
-      // redirect Caso user esteja no plano vitalício
+      // redirect Caso user esteja no plano pro
       if (
         request.nextUrl.pathname.startsWith("/plans") &&
         profile.plan_id === 2

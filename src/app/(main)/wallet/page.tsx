@@ -33,17 +33,19 @@ export default async function WalletPage() {
   const myTickersWithValues = responseMyTickersWithValues?.data || [];
 
   function getWalletTickers(): walletTicker[] {
-    const walletTickers = myTickersWithValues.map((ticker) => {
-      const matchingItem = myTickers.find(
-        (item) => item.ticker === ticker.stock
-      );
-      return {
-        ticker: ticker.stock,
-        totalReais: ticker.close * matchingItem!.stocks_quantity,
-        type: ticker.type,
-        sector: ticker.sector,
-      };
-    });
+    const walletTickers = myTickersWithValues
+      .map((ticker) => {
+        const matchingItem = myTickers.find(
+          (item) => item.ticker === ticker.stock
+        );
+        return {
+          ticker: ticker.stock,
+          totalReais: ticker.close * matchingItem!.stocks_quantity,
+          type: ticker.type,
+          sector: ticker.sector,
+        };
+      })
+      .filter((ticker) => ticker.totalReais > 0);
 
     return walletTickers.sort((a, b) => b.totalReais - a.totalReais);
   }

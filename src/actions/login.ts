@@ -152,7 +152,7 @@ export async function acceptTerms({
   }
 }
 
-export async function chooseFirstPlan(plan: "monthly" | "vitality") {
+export async function chooseFirstPlan(plan: "standard" | "pro") {
   try {
     const supabase = createClient();
     const {
@@ -161,7 +161,7 @@ export async function chooseFirstPlan(plan: "monthly" | "vitality") {
 
     const { data, error } = await supabase
       .from("profiles")
-      .update({ plan_id: plan === "monthly" ? 1 : 2 })
+      .update({ plan_id: plan === "standard" ? 1 : 2 })
       .eq("id", user?.id)
       .select();
 

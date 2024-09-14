@@ -64,7 +64,7 @@ export function CustomSelect({
         </PopoverTrigger>
         <PopoverContent className="p-0">
           <Command>
-            <CommandInput placeholder="Buscar Ticker de Ação ou Fiis..." />
+            <CommandInput placeholder="Buscar Ticker da Ação ou Fiis..." />
             <CommandList>
               <CommandEmpty>Nenhum ativo encontrado</CommandEmpty>
               <CommandGroup>

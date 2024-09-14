@@ -58,9 +58,9 @@ export const Header = ({ profile }: { profile: Profile }) => {
     if (profile) {
       switch (profile.plan_id) {
         case 1:
-          return "Mensal";
+          return "Standard";
         case 2:
-          return "Vitalício";
+          return "Pro";
       }
     }
 
@@ -114,7 +114,7 @@ export const Header = ({ profile }: { profile: Profile }) => {
                     className="flex items-center gap-2 hover:text-amber-500 transition"
                   >
                     <TrendingUp size={16} />
-                    Alterar para Vitalício
+                    Alterar para Pro
                   </Link>
                 </li>
               )}

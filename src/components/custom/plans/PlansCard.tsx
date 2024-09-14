@@ -11,7 +11,7 @@ type PlansCardProps = {
   price: string;
   popular?: boolean;
   children?: React.ReactNode;
-  plan: "monthly" | "vitality";
+  plan: "standard" | "pro";
   profile?: Profile;
 };
 
@@ -66,10 +66,7 @@ export const PlansCard = ({
               R$89,00
             </span>
           )}
-          <h3 className="text-3xl font-bold">
-            R${price}
-            {!popular && <span className=" text-base">/mês</span>}
-          </h3>
+          <h3 className="text-3xl font-bold">R${price}</h3>
         </div>
         <ul className="flex flex-col gap-3 mt-5">{children}</ul>
       </div>
@@ -83,7 +80,7 @@ export const PlansCard = ({
         Selecionar
       </CustomButton>
       <span className="text-stone-950/70 text-sm text-center -mt-3">
-        {popular ? "Pague uma vez. Use para sempre!" : "Cobrado mensalmente"}
+        Pague uma vez. Use para sempre!
       </span>
     </div>
   );

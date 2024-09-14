@@ -4,6 +4,7 @@ import { Ticker } from "@/types/types";
 import apiError from "@/utils/apiError";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { getProfile } from "./user";
 
 type CreateProps = {
   tickerId?: number;
@@ -29,6 +30,32 @@ export async function create({
     }
 
     const supabase = createClient();
+
+    const profileResponse = await getProfile();
+    if (!profileResponse.ok) {
+      return {
+        ok: false,
+        error: profileResponse.error,
+        data: null,
+      };
+    }
+
+    const userProfile = profileResponse.data;
+
+    if (userProfile?.plan_id === 1) {
+      const myTickers = await getAll();
+
+      if (myTickers?.ok) {
+        if (myTickers?.data?.length! >= 15) {
+          return {
+            ok: false,
+            error:
+              "Máximo de ativos cadastrados (15). Para cadastrar novos ativos, atualize seu plano.",
+            data: null,
+          };
+        }
+      }
+    }
 
     const { data, error } = await supabase
       .from("tickers")
