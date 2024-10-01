@@ -1,10 +1,10 @@
 "use client";
 
-import { chooseFirstPlan } from "@/actions/login";
 import { CustomButton } from "../CustomButton";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Profile } from "@/types/types";
+import { createCheckoutSession } from "@/actions/stripe-checkout";
 
 type PlansCardProps = {
   name: string;
@@ -27,21 +27,15 @@ export const PlansCard = ({
 
   async function handleChangePlan() {
     setLoading(true);
-    const response = await chooseFirstPlan(plan);
-
-    if (response?.error) {
-      toast.error("Erro ao selecionar um plano, tente novamente mais tarde.", {
-        description: response.error,
-      });
+    const response = await createCheckoutSession(plan);
+    if (!response.ok) {
+      toast.error(response.error);
+      setLoading(false);
+      return;
     }
 
-    if (response?.ok) {
-      toast.success("Plano escolhido com sucesso!", {
-        description: "Redirecionando para Home...",
-      });
-      window.location.href = "/";
-    }
-
+    const url = await response.data;
+    if (url) window.location.href = url;
     setLoading(false);
   }
 
@@ -63,7 +57,7 @@ export const PlansCard = ({
         <div className="flex items-end gap-1">
           {popular && (
             <span className="text-stone-400 line-through font-medium mr-1 block">
-              R$89,00
+              R$79,00
             </span>
           )}
           <h3 className="text-3xl font-bold">R${price}</h3>

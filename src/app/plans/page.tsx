@@ -72,7 +72,7 @@ export default async function PlansPage() {
 
           <PlansCard
             name="Pro"
-            price="69,00"
+            price="59,00"
             popular
             plan="pro"
             profile={profile}

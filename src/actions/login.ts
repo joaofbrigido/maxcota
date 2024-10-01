@@ -151,34 +151,3 @@ export async function acceptTerms({
     apiError(error);
   }
 }
-
-export async function chooseFirstPlan(plan: "standard" | "pro") {
-  try {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { data, error } = await supabase
-      .from("profiles")
-      .update({ plan_id: plan === "standard" ? 1 : 2 })
-      .eq("id", user?.id)
-      .select();
-
-    if (error) {
-      return {
-        ok: false,
-        error: error.message,
-        data: null,
-      };
-    }
-
-    return {
-      ok: true,
-      error: null,
-      data: data,
-    };
-  } catch (error) {
-    apiError(error);
-  }
-}

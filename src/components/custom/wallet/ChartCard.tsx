@@ -168,7 +168,12 @@ export const ChartCard = ({
               tickFormatter={(value) => value.slice(0, 3)}
               hide
             />
-            <XAxis dataKey="percentage" type="number" hide />
+            <XAxis
+              dataKey="percentage"
+              type="number"
+              hide
+              domain={["auto", "auto"]}
+            />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
